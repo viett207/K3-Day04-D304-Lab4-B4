@@ -1,0 +1,75 @@
+{
+  "transcript_id": "v1_openrouter_20260729T210816",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "version": "v1",
+  "created_at": "2026-07-29T21:08:16",
+  "query": "chatgpt đã lỗi thời chưa",
+  "status": "waiting_for_user",
+  "assistant_text": "Bạn đang hỏi về phiên bản cụ thể nào của ChatGPT hay về công nghệ AI nói chung?",
+  "rounds": [
+    {
+      "round": 1,
+      "assistant_text": null,
+      "tool_calls": [
+        {
+          "name": "clarify",
+          "args": {
+            "question": "Bạn đang hỏi về phiên bản cụ thể nào của ChatGPT hay về công nghệ AI nói chung?",
+            "response_type": "choice",
+            "options": [
+              "Phiên bản cụ thể",
+              "Công nghệ AI nói chung"
+            ]
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn đang hỏi về phiên bản cụ thể nào của ChatGPT hay về công nghệ AI nói chung?",
+            "response_type": "choice",
+            "options": [
+              "Phiên bản cụ thể",
+              "Công nghệ AI nói chung"
+            ]
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn đang hỏi về phiên bản cụ thể nào của ChatGPT hay về công nghệ AI nói chung?",
+            "response_type": "choice",
+            "options": [
+              "Phiên bản cụ thể",
+              "Công nghệ AI nói chung"
+            ],
+            "awaiting_user": true
+          }
+        }
+      ]
+    }
+  ],
+  "tool_events": [
+    {
+      "tool": "clarify",
+      "args": {
+        "question": "Bạn đang hỏi về phiên bản cụ thể nào của ChatGPT hay về công nghệ AI nói chung?",
+        "response_type": "choice",
+        "options": [
+          "Phiên bản cụ thể",
+          "Công nghệ AI nói chung"
+        ]
+      },
+      "result": {
+        "tool": "ask_user",
+        "question": "Bạn đang hỏi về phiên bản cụ thể nào của ChatGPT hay về công nghệ AI nói chung?",
+        "response_type": "choice",
+        "options": [
+          "Phiên bản cụ thể",
+          "Công nghệ AI nói chung"
+        ],
+        "awaiting_user": true
+      }
+    }
+  ]
+}

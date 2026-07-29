@@ -1,0 +1,1050 @@
+{
+  "run_id": "v3_B_group_openrouter_20260729T212718973698",
+  "version": "v3",
+  "artifact_version": "v3+pae24d3c60694+t45d3ab770c3b",
+  "prompt_hash": "ae24d3c60694f81dd51e0ee0c85f9905b08f784e1b17d37234939927902c0255",
+  "tools_hash": "45d3ab770c3b58db2f705cc84542bf1f561710ee180dbb2f0bbe19257c15fad2",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "C:\\Users\\nmc11\\Documents\\K3-Day04-D304-Lab4-B4\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "C:\\Users\\nmc11\\Documents\\K3-Day04-D304-Lab4-B4\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "Team eval cases for AI Trend Detective: 5 single-turn and 5 multi-turn cases that test trend analysis, evidence collection, and tool routing.",
+  "generated_at": "2026-07-29T21:27:18",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 10,
+    "provider_error_cases": 0,
+    "passed_cases": 3,
+    "case_accuracy": 0.3,
+    "tool_routing_accuracy": 0.3,
+    "argument_accuracy": 0.3,
+    "multiturn_accuracy": 0.0,
+    "failure_counts": {
+      "wrong_tool": 6,
+      "out_of_scope": 1
+    },
+    "observed_mismatch_counts": {
+      "missing_tool_call": 2,
+      "wrong_arg_value": 4,
+      "unexpected_tool_call": 1
+    }
+  },
+  "results": [
+    {
+      "id": "G01_trend_hype_vs_reality",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Trend evaluation should collect news, social discussion, research, và dùng evidence_judge."
+      },
+      "input": "Trong năm 2026, Agentic RAG có thật sự đáng làm đồ án hay chỉ là hype?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Agentic RAG trend 2026",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Agentic RAG"
+            }
+          },
+          {
+            "name": "papers",
+            "args": {
+              "query": "Agentic RAG"
+            }
+          },
+          {
+            "name": "evidence_judge",
+            "args": {
+              "topic": "Agentic RAG"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có thể cho biết thêm về \"Agentic RAG\" mà bạn đang đề cập đến không? Bạn đang tìm kiếm thông tin cụ thể nào về xu hướng này?",
+              "response_type": "text"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "missing tool call lookup",
+          "missing tool call social_search",
+          "missing tool call papers",
+          "missing tool call evidence_judge",
+          "extra tool call clarify"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có thể cho biết thêm về \"Agentic RAG\" mà bạn đang đề cập đến không? Bạn đang tìm kiếm thông tin cụ thể nào về xu hướng này?",
+            "response_type": "text"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có thể cho biết thêm về \"Agentic RAG\" mà bạn đang đề cập đến không? Bạn đang tìm kiếm thông tin cụ thể nào về xu hướng này?",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G02_need_clarify_scope",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "User hỏi quá rộng, agent phải hỏi rõ trend cụ thể trước khi tìm evidence."
+      },
+      "input": "Trend AI gần đây, tôi nên đầu tư vào cái nào?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có thể cho biết rõ hơn về loại hình AI nào bạn đang quan tâm không? Ví dụ: AI trong y tế, tài chính, tự động hóa, hay một lĩnh vực cụ thể nào khác?",
+              "response_type": "text"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có thể cho biết rõ hơn về loại hình AI nào bạn đang quan tâm không? Ví dụ: AI trong y tế, tài chính, tự động hóa, hay một lĩnh vực cụ thể nào khác?",
+            "response_type": "text"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có thể cho biết rõ hơn về loại hình AI nào bạn đang quan tâm không? Ví dụ: AI trong y tế, tài chính, tự động hóa, hay một lĩnh vực cụ thể nào khác?",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_specific_account_review",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Yêu cầu rõ account → phải dùng timeline với handle chính xác."
+      },
+      "input": "Xem 5 tweet mới nhất của Sam Altman về AI trend nhé.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "sama",
+              "limit": 5
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "sama",
+              "limit": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "sama",
+            "limit": 5
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "error": "ReadTimeout",
+            "message": "HTTPSConnectionPool(host='twitter-api45.p.rapidapi.com', port=443): Read timed out. (read timeout=30)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G04_multi_turn_add_example",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: giữ chủ đề Vietnam startup, tìm evidence và kết luận."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Trend AI nào đang được nhiều startup Việt quan tâm?"
+        },
+        {
+          "role": "user",
+          "content": "Tôi muốn ví dụ của ít nhất 2 sản phẩm thực tế."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI startup trend Vietnam",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI startup Vietnam"
+            }
+          },
+          {
+            "name": "evidence_judge",
+            "args": {
+              "topic": "AI startup trend Vietnam"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI startup Vietnam",
+              "topic": "news",
+              "timeframe": "month",
+              "max_results": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "query: expected 'AI startup trend Vietnam', got 'AI startup Vietnam'",
+          "missing tool call social_search",
+          "missing tool call evidence_judge"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI startup Vietnam",
+            "topic": "news",
+            "timeframe": "month",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "web_search",
+            "error": "RuntimeError",
+            "message": "Missing TAVILY_API_KEY env var"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G05_request_summary",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Trend summary case should not skip evidence_judge after data collection."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tôi đang cân nhắc ứng dụng AI agent cho đội vận hành."
+        },
+        {
+          "role": "user",
+          "content": "Tóm tắt ngắn gọn tình hình trend AI agent năm 2026 cho tôi."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI agent trend 2026",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          },
+          {
+            "name": "evidence_judge",
+            "args": {
+              "topic": "AI agent trend 2026"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI agent trend 2026",
+              "topic": "news",
+              "timeframe": "year",
+              "max_results": 5
+            }
+          },
+          {
+            "name": "papers",
+            "args": {
+              "query": "AI agent",
+              "max_results": 5,
+              "sort_by": "lastUpdatedDate"
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI agent 2026",
+              "search_type": "Latest",
+              "limit": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "timeframe: expected 'month', got 'year'",
+          "missing tool call evidence_judge",
+          "extra tool call papers",
+          "extra tool call social_search"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI agent trend 2026",
+            "topic": "news",
+            "timeframe": "year",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "web_search",
+            "error": "RuntimeError",
+            "message": "Missing TAVILY_API_KEY env var"
+          }
+        },
+        {
+          "tool": "papers",
+          "args": {
+            "query": "AI agent",
+            "max_results": 5,
+            "sort_by": "lastUpdatedDate"
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "query": "AI agent",
+            "api_query": "all:AI AND all:agent",
+            "total_results": 11072,
+            "items": [
+              {
+                "arxiv_id": "2607.25914v1",
+                "title": "Toward Standardized Cross-Vendor Agent Tool Trust Management in Autonomous Networks",
+                "summary": "Autonomous Network Levels 4-5 require AI agents to invoke tools across vendor boundaries without human oversight, yet existing management standards lack a standardized mechanism for cross-vendor trust visibility. When a tool from Vendor B is compromised, agents from Vendor A continue invoking it -- unaware of the trust degradation -- causing cascading service impact. We present AgentToolMO, a proposed 3GPP NRM information model for agent tool trust management. The model comprises: a formally defined trust state machine with provable graduated enforcement, damped cascade propagation with bounded convergence, cross-vendor trust notifications via existing Management Services (MnS) interfaces, and retroactive impact assessment through NRM dependency graph traversal. Simulation-based evaluation across multi-vendor topologies shows that standardized cross-vendor notifications reduce blast radius from hours-scale undetected propagation to near-real-time containment bounded by MnS notification delivery, with cascade convergence guaranteed in bounded iterations and sub-linear notification scaling across vendor domains. The framework operates within existing 3GPP management infrastructure, leverages existing protocols, and provides a standardization pathway for trustworthy multi-vendor autonomous network management.",
+                "authors": [
+                  "Ravi Kant Sharma",
+                  "Ashutosh Uttam",
+                  "Ajay Kumar"
+                ],
+                "published": "2026-07-28T16:06:41Z",
+                "updated": "2026-07-28T16:06:41Z",
+                "url": "http://arxiv.org/abs/2607.25914v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.25914v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.AI",
+                "categories": [
+                  "cs.AI",
+                  "cs.CR",
+                  "cs.NI"
+                ]
+              },
+              {
+                "arxiv_id": "2607.25891v1",
+                "title": "Messier: A High-Resolution Corpus for Cross-Benchmark Agent Evaluation",
+                "summary": "Evaluating AI agents in interactive environments is hindered by fragmented tasks, scaffolds, verifiers, and scoring rules. Existing efforts focus on narrow settings, remain limited in scale, or require costly reruns, leaving much of the empirical record incomparable. We introduce Messier, a unified corpus of 957,253 records that span 30 benchmarks, 714 agents, 11,891 tasks, and 74,205 verifiers. Messier consolidates public benchmark scores and supplements them with five-agent runs across six underrepresented professional and scientific domains, including a recent legal benchmark. Each record is standardized by model, scaffold, environment, task, verifier, and aggregation rule, with SOC/NAICS classifications for occupational and industry analysis. Using this corpus, we show frontier progress is uneven across benchmark types, with \"function calling\" saturated, \"programming\" improving the fastest, and \"enterprise workflows\" remaining the most challenging. Furthermore, counterfactual rescoring shows that strict all-pass aggregation in multi-verifier tasks can obscure progress and artificially alter agent rankings. From these standardized records, we derive capability scales that align with Epoch's Evaluation Capability Index rankings at Spearman \\r{ho} = 0.81 and can be specialized by domain, occupation, action space, or verifier type. Messier provides a foundational, reusable infrastructure for agent capability scaling, benchmark auditing, and fine-grained analysis of evaluation failures.",
+                "authors": [
+                  "Stefan Krsteski",
+                  "Charlotte Meyer",
+                  "Guillaume Allegre",
+                  "Tony O'Halloran",
+                  "Alexandre Sallinen"
+                ],
+                "published": "2026-07-28T15:50:19Z",
+                "updated": "2026-07-28T15:50:19Z",
+                "url": "http://arxiv.org/abs/2607.25891v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.25891v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.AI",
+                "categories": [
+                  "cs.AI",
+                  "cs.DB"
+                ]
+              },
+              {
+                "arxiv_id": "2607.25890v1",
+                "title": "Distributing Security Controls Through Harness Engineering",
+                "summary": "AI coding agents are being adopted at historic speed, yet security and risk concerns remain the primary barrier to scaling agentic AI across organizations. Existing security controls for coding agents are not systematically distributed to engineering teams, and vendor-native solutions introduce ecosystem dependencies that may not suit every deployment context. This paper investigates whether off-the-shelf security controls can be implemented on commercial AI coding agents and scaled to a distributed user base via a custom agent harness. A phased testing methodology was applied across four agent configurations --- two commercial agents with and without controls, a baseline harness, and a security-hardened harness --- using a 23-test suite derived from the OWASP Top 10 for Agentic Applications. SHarD (Secure Harness Distribution), a distributable harness built on the Pi agent harness, demonstrated that three categories of security controls --- OS sandboxing, skill scanning, and tool restriction --- can be embedded and distributed via a single install command while retaining equivalent efficacy to direct installation on commercial agents. SHarD achieved an adjusted score of 100\\%, matching the best securely configured commercial agent, with no regression across any test category. Notable observations include evidence that model non-determinism produces inconsistent security outcomes and that autonomous agent behavior can cross system boundaries in ways that OS sandboxing directly mitigates. Initial characteristics toward a control harness fitness framework are proposed, and a third research question is identified for future investigation.",
+                "authors": [
+                  "William Robert Gore"
+                ],
+                "published": "2026-07-28T15:50:16Z",
+                "updated": "2026-07-28T15:50:16Z",
+                "url": "http://arxiv.org/abs/2607.25890v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.25890v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.AI",
+                "categories": [
+                  "cs.AI"
+                ]
+              },
+              {
+                "arxiv_id": "2607.25886v1",
+                "title": "RSIBench-Data: Benchmarking Data-Centric Research for Recursive Self-Improvement",
+                "summary": "Recursive self-improvement requires turning evidence of model failures into better models. Data-centric post-training research entails diagnosing capability gaps, designing and validating training-data strategies, and learning from checkpoint feedback. Can LLM agents automate this loop? Existing benchmarks entangle research decisions with optimization, serving, evaluation, and systems implementation, obscuring agents' research capability. We introduce RSIBench-Data, a controlled benchmark of LLM agents as data-centric researchers with a fixed post-training stack. Agents iteratively revise training-data strategies for a fixed target model; training and serving use Tinker-backed services, official evaluation runs through Harbor and E2B sandboxes, and budgets are fixed across agents. We evaluate four frontier agents on six benchmarks across software engineering, terminal use, scientific question answering, and mathematics. Agents demonstrate core data-centric research capabilities: in 58.33\\% of settings, they improve upon the first valid attempt by refining strategies from feedback. However, improvement is inconsistent. Among searches continuing after the best observed score, 78.26\\% end with a lower-scoring final attempt, while the rest only recover the same peak. A strong candidate may therefore appear early or midway through a run even as later revisions fail. Trajectory analysis identifies four patterns in stronger runs: accurate hypotheses, validation-grounded supervision, behavior-aligned data, and preservation of strong checkpoints. These findings suggest that current agents can make useful data-centric discoveries but cannot yet translate feedback into consistent improvements. RSIBench-Data provides a measurable, auditable testbed for the research capabilities required for recursive self-improvement. We open-source our code at https://github.com/evolvent-ai/RSIBench-Data.",
+                "authors": [
+                  "Fanqing Meng",
+                  "Lingxiao Du",
+                  "Qiguang Chen",
+                  "Ziqi Zhao",
+                  "Haocheng Lu",
+                  "Mengkang Hu",
+                  "Michael Qizhe Shieh"
+                ],
+                "published": "2026-07-28T15:46:41Z",
+                "updated": "2026-07-28T15:46:41Z",
+                "url": "http://arxiv.org/abs/2607.25886v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.25886v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.SE",
+                "categories": [
+                  "cs.SE",
+                  "cs.CL"
+                ]
+              },
+              {
+                "arxiv_id": "2606.18902v2",
+                "title": "SAGE: Stochastic Prompt Optimization via Agent-Guided Exploration",
+                "summary": "Context engineering has emerged as a primary lever for improving AI systems without parameter updates. Recent work showing that textual gradients do not function as real gradients motivates treating automatic prompt optimization (APO) as black-box search. We introduce SPO (Stochastic Prompt Optimization), a framework for stochastic search over prompt space, and compare three strategies of increasing sophistication: error-informed random search, a genetic algorithm with evolutionary operators, and SAGE (SPO via Agent-Guided Exploration), a multi-agent pipeline with diagnostic code execution. Across three benchmarks, no single strategy dominates; effectiveness depends on the interaction of landscape structure with error type. We further deploy SAGE on a mental-health chatbot under a continuous optimization paradigm, where it compounds eight cycles of individually-noisy A/B tests into a statistically robust gain in next-day retention. We argue that coupling qualitative diagnosis with quantitative validation is what makes agentic optimization effective for open-ended task-oriented dialogue.",
+                "authors": [
+                  "Ziyi Zhu",
+                  "Luka Smyth",
+                  "Saki Shinoda",
+                  "Jinghong Chen"
+                ],
+                "published": "2026-06-17T10:25:25Z",
+                "updated": "2026-07-28T13:10:27Z",
+                "url": "http://arxiv.org/abs/2606.18902v2",
+                "pdf_url": "https://arxiv.org/pdf/2606.18902v2",
+                "source": "arxiv.org",
+                "primary_category": "cs.CL",
+                "categories": [
+                  "cs.CL"
+                ]
+              }
+            ],
+            "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+          }
+        },
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "AI agent 2026",
+            "search_type": "Latest",
+            "limit": 5
+          },
+          "result": {
+            "tool": "search_tweets",
+            "error": "HTTPError",
+            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/search.php?query=AI+agent+2026&search_type=Latest"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G06_trend_risk_question",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Trend risk request phải lấy evidence đa nguồn và đánh giá rủi ro."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tôi điều hành một startup truyền thông nhỏ."
+        },
+        {
+          "role": "user",
+          "content": "Trend AI generated content có rủi ro gì cho startup truyền thông?"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI generated content risk startup media",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI generated content risk"
+            }
+          },
+          {
+            "name": "evidence_judge",
+            "args": {
+              "topic": "AI generated content risk"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI generated content risks for media startups",
+              "topic": "general",
+              "timeframe": "month",
+              "max_results": 5
+            }
+          },
+          {
+            "name": "papers",
+            "args": {
+              "query": "AI generated content risks",
+              "max_results": 5,
+              "sort_by": "relevance"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "query: expected 'AI generated content risk startup media', got 'AI generated content risks for media startups'",
+          "topic: expected 'news', got 'general'",
+          "missing tool call social_search",
+          "missing tool call evidence_judge",
+          "extra tool call papers"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI generated content risks for media startups",
+            "topic": "general",
+            "timeframe": "month",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "web_search",
+            "error": "RuntimeError",
+            "message": "Missing TAVILY_API_KEY env var"
+          }
+        },
+        {
+          "tool": "papers",
+          "args": {
+            "query": "AI generated content risks",
+            "max_results": 5,
+            "sort_by": "relevance"
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "query": "AI generated content risks",
+            "api_query": "all:AI AND all:generated AND all:content AND all:risks",
+            "total_results": 419,
+            "items": [
+              {
+                "arxiv_id": "2605.16953v2",
+                "title": "How do Humans Process AI-generated Hallucination Contents: a Neuroimaging Study",
+                "summary": "While AI-generated hallucinations pose considerable risks, the underlying cognitive mechanisms by which humans can successfully recognize or be misled by these hallucinations remain unclear. To address this problem, this paper explores humans' neural dynamics to characterize how the brain processes hallucinated content. We record EEG signals from 27 participants while they are performing a verification task to judge the correctness of image descriptions generated by a multi-modal large language model (MLLM). Based on an averaged event-related potential (ERP) study, we reveal that multiple cognitive processes, e.g., semantic integration, inferential processing, memory retrieval, and cognitive load, exhibit distinct patterns when humans process hallucinated versus non-hallucinated content. Notably, neural responses to hallucinations that were misjudged versus correctly judged by human participants showed significant differences. This indicates that misjudged AI-generated hallucinations failed to trigger the standard neurocognitive fact verification pathway.",
+                "authors": [
+                  "Shuqi Zhu",
+                  "Yi Zhong",
+                  "Ziyi Ye",
+                  "Bangde Du",
+                  "Yujia Zhou",
+                  "Qingyao Ai",
+                  "Yiqun Liu"
+                ],
+                "published": "2026-05-16T12:08:22Z",
+                "updated": "2026-05-25T11:08:16Z",
+                "url": "http://arxiv.org/abs/2605.16953v2",
+                "pdf_url": "https://arxiv.org/pdf/2605.16953v2",
+                "source": "arxiv.org",
+                "primary_category": "cs.AI",
+                "categories": [
+                  "cs.AI",
+                  "cs.CL"
+                ]
+              },
+              {
+                "arxiv_id": "2601.16513v1",
+                "title": "Competing Visions of Ethical AI: A Case Study of OpenAI",
+                "summary": "Introduction. AI Ethics is framed distinctly across actors and stakeholder groups. We report results from a case study of OpenAI analysing ethical AI discourse. Method. Research addressed: How has OpenAI's public discourse leveraged 'ethics', 'safety', 'alignment' and adjacent related concepts over time, and what does discourse signal about framing in practice? A structured corpus, differentiating between communication for a general audience and communication with an academic audience, was assembled from public documentation. Analysis. Qualitative content analysis of ethical themes combined inductively derived and deductively applied codes. Quantitative analysis leveraged computational content analysis methods via NLP to model topics and quantify changes in rhetoric over time. Visualizations report aggregate results. For reproducible results, we have released our code at https://github.com/famous-blue-raincoat/AI_Ethics_Discourse. Results. Results indicate that safety and risk discourse dominate OpenAI's public communication and documentation, without applying academic and advocacy ethics frameworks or vocabularies. Conclusions. Implications for governance are presented, along with discussion of ethics-washing practices in industry.",
+                "authors": [
+                  "Melissa Wilfley",
+                  "Mengting Ai",
+                  "Madelyn Rose Sanfilippo"
+                ],
+                "published": "2026-01-23T07:26:45Z",
+                "updated": "2026-01-23T07:26:45Z",
+                "url": "http://arxiv.org/abs/2601.16513v1",
+                "pdf_url": "https://arxiv.org/pdf/2601.16513v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CY",
+                "categories": [
+                  "cs.CY"
+                ]
+              },
+              {
+                "arxiv_id": "2504.02898v2",
+                "title": "A Practical Synthesis of Detecting AI-Generated Textual, Visual, and Audio Content",
+                "summary": "Advances in AI-generated content have led to wide adoption of large language models, diffusion-based visual generators, and synthetic audio tools. However, these developments raise critical concerns about misinformation, copyright infringement, security threats, and the erosion of public trust. In this paper, we explore an extensive range of methods designed to detect and mitigate AI-generated textual, visual, and audio content. We begin by discussing motivations and potential impacts associated with AI-based content generation, including real-world risks and ethical dilemmas. We then outline detection techniques spanning observation-based strategies, linguistic and statistical analysis, model-based pipelines, watermarking and fingerprinting, as well as emergent ensemble approaches. We also present new perspectives on robustness, adaptation to rapidly improving generative architectures, and the critical role of human-in-the-loop verification. By surveying state-of-the-art research and highlighting case studies in academic, journalistic, legal, and industrial contexts, this paper aims to inform robust solutions and policymaking. We conclude by discussing open challenges, including adversarial transformations, domain generalization, and ethical concerns, thereby offering a holistic guide for researchers, practitioners, and regulators to preserve content authenticity in the face of increasingly sophisticated AI-generated media.",
+                "authors": [
+                  "Lele Cao"
+                ],
+                "published": "2025-04-02T23:27:55Z",
+                "updated": "2025-09-26T23:48:49Z",
+                "url": "http://arxiv.org/abs/2504.02898v2",
+                "pdf_url": "https://arxiv.org/pdf/2504.02898v2",
+                "source": "arxiv.org",
+                "primary_category": "cs.CL",
+                "categories": [
+                  "cs.CL",
+                  "cs.LG"
+                ]
+              },
+              {
+                "arxiv_id": "2604.22654v1",
+                "title": "What People See (and Miss) About Generative AI Risks: Perceptions of Failures, Risks, and Who Should Address Them",
+                "summary": "Despite growing concerns about the risks of Generative AI (GenAI), there is limited understanding of public perceptions of these risks and their associated failure modes -- defined as recurring patterns of sociotechnical breakdown across the GenAI lifecycle that contribute to risks of real-world harm. To address this gap, we present a survey instrument, validated with eight subject matter experts and deployed on a sample of 960 U.S.-based participants, to assess awareness and perceptions of GenAI's failure modes, their associated risks, and stakeholder responsibilities to address them. To support realism and content validity, our instrument is structured around scenarios grounded in publicly reported incidents and a taxonomy of GenAI's failure modes. Findings suggest that our instrument is (1) effective for assessing risk awareness and perceptions in a way that is grounded in people's current contexts of use, yet is extensible to new contexts that will inevitably arise; and (2) potentially useful for informing the design of AI literacy tools and interventions. We argue for AI literacy and governance approaches that align with how people encounter and reason about GenAI in everyday life.",
+                "authors": [
+                  "Megan Li",
+                  "Wendy Bickersteth",
+                  "Ningjing Tang",
+                  "Parv Kapoor",
+                  "Khinezin Win",
+                  "Peter Zhong",
+                  "Jason I. Hong",
+                  "Lorrie Faith Cranor",
+                  "Hoda Heidari",
+                  "Hong Shen"
+                ],
+                "published": "2026-04-24T15:29:15Z",
+                "updated": "2026-04-24T15:29:15Z",
+                "url": "http://arxiv.org/abs/2604.22654v1",
+                "pdf_url": "https://arxiv.org/pdf/2604.22654v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.HC",
+                "categories": [
+                  "cs.HC"
+                ]
+              },
+              {
+                "arxiv_id": "2412.15030v1",
+                "title": "When Copilot Becomes Autopilot: Generative AI's Critical Risk to Knowledge Work and a Critical Solution",
+                "summary": "Generative AI, with its tendency to \"hallucinate\" incorrect results, may pose a risk to knowledge work by introducing errors. On the other hand, it may also provide unprecedented opportunities for users, particularly non-experts, to learn and apply advanced software features and greatly increase the scope and complexity of tasks they can successfully achieve. As an example of a complex knowledge workflow that is subject to risks and opportunities from generative AI, we consider the spreadsheet. AI hallucinations are an important challenge, but they are not the greatest risk posed by generative AI to spreadsheet workflows. Rather, as more work can be safely delegated to AI, the risk is that human critical thinking -- the ability to holistically and rigorously evaluate a problem and its solutions -- is degraded in the process. The solution is to design the interfaces of generative AI systems deliberately to foster and encourage critical thinking in knowledge work, building primarily on a long history of research on critical thinking tools for education. We discuss a prototype system for the activity of critical shortlisting in spreadsheets. The system uses generative AI to suggest shortlisting criteria and applies these criteria to sort rows in a spreadsheet. It also generates \"provocations\": short text snippets that critique the AI-generated criteria, highlighting risks, shortcomings, and alternatives. Our prototype opens up a rich and completely unexplored design space of critical thinking tools for modern AI-assisted knowledge work. We outline a research agenda for AI as a critic or provocateur, including questions about where and when provocations should appear, their form and content, and potential design trade-offs.",
+                "authors": [
+                  "Advait Sarkar",
+                  "Xiaotong",
+                  "Xu",
+                  "Neil Toronto",
+                  "Ian Drosos",
+                  "Christian Poelitz"
+                ],
+                "published": "2024-12-19T16:40:41Z",
+                "updated": "2024-12-19T16:40:41Z",
+                "url": "http://arxiv.org/abs/2412.15030v1",
+                "pdf_url": "https://arxiv.org/pdf/2412.15030v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.HC",
+                "categories": [
+                  "cs.HC"
+                ]
+              }
+            ],
+            "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+          }
+        }
+      ]
+    },
+    {
+      "id": "G07_multi_turn_refine_query",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn refine: chuyển focus sang Vietnam social media và vẫn thu evidence đúng."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Cho tôi biết trend AI cho marketing."
+        },
+        {
+          "role": "user",
+          "content": "Chỉ tập trung vào Việt Nam và social media."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI marketing Vietnam social media",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI marketing Vietnam"
+            }
+          },
+          {
+            "name": "evidence_judge",
+            "args": {
+              "topic": "AI marketing Vietnam"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI marketing Việt Nam",
+              "limit": 5
+            }
+          },
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI marketing Việt Nam",
+              "topic": "news",
+              "timeframe": "week",
+              "max_results": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "query: expected 'AI marketing Vietnam social media', got 'AI marketing Việt Nam'",
+          "timeframe: expected 'month', got 'week'",
+          "query: expected 'AI marketing Vietnam', got 'AI marketing Việt Nam'",
+          "missing tool call evidence_judge"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "AI marketing Việt Nam",
+            "limit": 5
+          },
+          "result": {
+            "tool": "search_tweets",
+            "error": "HTTPError",
+            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/search.php?query=AI+marketing+Vi%E1%BB%87t+Nam&search_type=Latest"
+          }
+        },
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI marketing Việt Nam",
+            "topic": "news",
+            "timeframe": "week",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "web_search",
+            "error": "RuntimeError",
+            "message": "Missing TAVILY_API_KEY env var"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G08_out_of_scope_opinion",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Câu hỏi suy đoán broad không phải research trend → không gọi tool."
+      },
+      "input": "Bạn có nghĩ AI sẽ vượt con người trong 5 năm tới không?",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn đang hỏi về lĩnh vực cụ thể nào mà AI có thể vượt con người? Ví dụ: trí tuệ, sáng tạo, hay một lĩnh vực chuyên môn nào đó?",
+              "response_type": "text"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": "unexpected_tool_call",
+        "failure_type": "out_of_scope",
+        "failures": [
+          "expected no tool call"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn đang hỏi về lĩnh vực cụ thể nào mà AI có thể vượt con người? Ví dụ: trí tuệ, sáng tạo, hay một lĩnh vực chuyên môn nào đó?",
+            "response_type": "text"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn đang hỏi về lĩnh vực cụ thể nào mà AI có thể vượt con người? Ví dụ: trí tuệ, sáng tạo, hay một lĩnh vực chuyên môn nào đó?",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G09_need_clarify_example",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Team eval cần confirm scope before searching."
+      },
+      "input": "Giúp tôi đánh giá trend AI cho doanh nghiệp vừa và nhỏ.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có thể cung cấp thêm thông tin cụ thể về các khía cạnh nào của trend AI cho doanh nghiệp vừa và nhỏ mà bạn muốn đánh giá không? Ví dụ: ứng dụng cụ thể, công nghệ, hay tác động đến hoạt động kinh doanh?",
+              "response_type": "text"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có thể cung cấp thêm thông tin cụ thể về các khía cạnh nào của trend AI cho doanh nghiệp vừa và nhỏ mà bạn muốn đánh giá không? Ví dụ: ứng dụng cụ thể, công nghệ, hay tác động đến hoạt động kinh doanh?",
+            "response_type": "text"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có thể cung cấp thêm thông tin cụ thể về các khía cạnh nào của trend AI cho doanh nghiệp vừa và nhỏ mà bạn muốn đánh giá không? Ví dụ: ứng dụng cụ thể, công nghệ, hay tác động đến hoạt động kinh doanh?",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G10_trend_with_url",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Link cụ thể + trend judgment → fetch rồi evidence_judge."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tôi muốn đánh giá một nguồn chính thức trước khi đưa ra nhận định về xu hướng."
+        },
+        {
+          "role": "user",
+          "content": "Tóm tắt bài viết này và nói liệu nó có cho thấy hype AI không: https://openai.com/blog/gpt-5"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://openai.com/blog/gpt-5"
+            }
+          },
+          {
+            "name": "evidence_judge",
+            "args": {
+              "topic": "GPT-5 hype"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://openai.com/blog/gpt-5"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "missing tool call evidence_judge"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "fetch",
+          "args": {
+            "url": "https://openai.com/blog/gpt-5"
+          },
+          "result": {
+            "tool": "read_url",
+            "error": "RuntimeError",
+            "message": "Missing FIRECRAWL_API_KEY env var"
+          }
+        }
+      ]
+    }
+  ]
+}
