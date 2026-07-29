@@ -57,7 +57,7 @@ tools:
       required: [url]
 
   - name: evidence_judge
-    description: "Đánh giá evidence đã thu thập và trả về điểm hype/evidence/adoption/risk cùng verdict."
+    description: "Đánh giá evidence đã thu thập, trả về điểm evidence/hype/adoption/risk, trọng số chấm và verdict có thể kiểm chứng."
     parameters:
       type: object
       properties:

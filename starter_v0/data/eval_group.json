@@ -64,7 +64,10 @@
       "id": "G05_request_summary",
       "phase": "B",
       "suite": "group",
-      "query": "Tóm tắt ngắn gọn tình hình trend AI agent năm 2026 cho tôi.",
+      "turns": [
+        {"role": "user", "content": "Tôi đang cân nhắc ứng dụng AI agent cho đội vận hành."},
+        {"role": "user", "content": "Tóm tắt ngắn gọn tình hình trend AI agent năm 2026 cho tôi."}
+      ],
       "failure_type": "wrong_tool",
       "expect": {
         "tool_calls": [
@@ -78,7 +81,10 @@
       "id": "G06_trend_risk_question",
       "phase": "B",
       "suite": "group",
-      "query": "Trend AI generated content có rủi ro gì cho startup truyền thông?",
+      "turns": [
+        {"role": "user", "content": "Tôi điều hành một startup truyền thông nhỏ."},
+        {"role": "user", "content": "Trend AI generated content có rủi ro gì cho startup truyền thông?"}
+      ],
       "failure_type": "wrong_tool",
       "expect": {
         "tool_calls": [
@@ -131,7 +137,10 @@
       "id": "G10_trend_with_url",
       "phase": "B",
       "suite": "group",
-      "query": "Tóm tắt bài viết này và nói liệu nó có cho thấy hype AI không: https://openai.com/blog/gpt-5",
+      "turns": [
+        {"role": "user", "content": "Tôi muốn đánh giá một nguồn chính thức trước khi đưa ra nhận định về xu hướng."},
+        {"role": "user", "content": "Tóm tắt bài viết này và nói liệu nó có cho thấy hype AI không: https://openai.com/blog/gpt-5"}
+      ],
       "failure_type": "wrong_tool",
       "expect": {
         "tool_calls": [

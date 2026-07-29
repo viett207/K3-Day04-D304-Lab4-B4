@@ -1,0 +1,57 @@
+{
+  "transcript_id": "v0_openrouter_20260729T123500",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "version": "v0",
+  "created_at": "2026-07-29T12:35:00",
+  "query": "abcd là gì",
+  "status": "waiting_for_user",
+  "assistant_text": "Bạn có thể cung cấp thêm thông tin về \"abcd\" mà bạn đang đề cập đến không? Nó có thể là một thuật ngữ, một xu hướng AI, hay một cái gì khác?",
+  "rounds": [
+    {
+      "round": 1,
+      "assistant_text": null,
+      "tool_calls": [
+        {
+          "name": "clarify",
+          "args": {
+            "question": "Bạn có thể cung cấp thêm thông tin về \"abcd\" mà bạn đang đề cập đến không? Nó có thể là một thuật ngữ, một xu hướng AI, hay một cái gì khác?",
+            "response_type": "text"
+          }
+        }
+      ],
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có thể cung cấp thêm thông tin về \"abcd\" mà bạn đang đề cập đến không? Nó có thể là một thuật ngữ, một xu hướng AI, hay một cái gì khác?",
+            "response_type": "text"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có thể cung cấp thêm thông tin về \"abcd\" mà bạn đang đề cập đến không? Nó có thể là một thuật ngữ, một xu hướng AI, hay một cái gì khác?",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    }
+  ],
+  "tool_events": [
+    {
+      "tool": "clarify",
+      "args": {
+        "question": "Bạn có thể cung cấp thêm thông tin về \"abcd\" mà bạn đang đề cập đến không? Nó có thể là một thuật ngữ, một xu hướng AI, hay một cái gì khác?",
+        "response_type": "text"
+      },
+      "result": {
+        "tool": "ask_user",
+        "question": "Bạn có thể cung cấp thêm thông tin về \"abcd\" mà bạn đang đề cập đến không? Nó có thể là một thuật ngữ, một xu hướng AI, hay một cái gì khác?",
+        "response_type": "text",
+        "options": [],
+        "awaiting_user": true
+      }
+    }
+  ]
+}

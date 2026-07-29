@@ -27,8 +27,11 @@ Tool trả về JSON với các trường:
 - `scores`: `evidence_score`, `hype_score`, `adoption_score`, `risk_score`
 - `verdict`: kết luận chung
 - `summary`: tóm tắt bằng chữ
+- `scoring_method`: trọng số được dùng để tính từng điểm, giúp kết quả kiểm chứng được
 - `positive_evidence`, `negative_evidence`, `paper_count`, `real_world_examples`, `hype_signals`
 
 ## Lưu ý
 
 Tool này không truy vấn web hay social. Nó chỉ đánh giá evidence đã được thu thập bằng các tool khác.
+
+Các trường đếm phải là số nguyên không âm. Danh sách evidence chỉ nhận chuỗi không rỗng; dữ liệu không hợp lệ sẽ trả lỗi thay vì tạo điểm số sai lệch.

@@ -244,5 +244,3 @@ Sau đó chuẩn bị demo chung:
 3. Cập nhật file nếu vai trò thay đổi.
 
 Chúc nhóm hoàn thành tốt — kế hoạch này theo đúng workflow bạn yêu cầu và làm rõ công việc cho team 3 người.
-"@
-[System.IO.File]::WriteAllText('TEAM_TASKS_fixed.md', $txt, [System.Text.Encoding]::UTF8)

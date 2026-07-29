@@ -1,4 +1,4 @@
 version,author,changed_artifact,artifact_version,prompt_hash,tools_hash,reason,hypothesis,metric_name,metric_before,metric_after,run_file
-v0,Nguyễn Hoàng Việt,baseline, , ,Thiết lập prompt và tool cơ bản, chạy baseline,Mong muốn một agent Trend Detective thoả mãn yêu cầu lab,case_accuracy, , ,runs/v0_base.json
-v1,Nguyễn Mạnh Cường,add evidence_judge,evidence_judge tool and prompt,Thêm tool mới đánh giá evidence,Giả thuyết tool mới sẽ giúp kết luận trend rõ ràng hơn,tool_routing_accuracy, , ,runs/v1_base.json
-v2,Nguyễn Mạnh Cường,team eval,data/eval_group.json đã thêm 10 case,Kiểm tra kỹ năng trend analysis và multi-turn của agent,case_accuracy, , ,runs/v2_group.json
+v0,Nguyễn Hoàng Việt,baseline,,,,Thiết lập prompt và tool cơ bản; chạy baseline,Agent Trend Detective đáp ứng yêu cầu baseline,case_accuracy,,,runs/v0_base.json
+v1,Nguyễn Mạnh Cường,tools/evidence_judge; tools/__init__.py; artifacts/tools.yaml,,,,Thêm tool đánh giá evidence,Điểm số minh bạch giúp kết luận trend nhất quán hơn,tool_routing_accuracy,,,runs/v1_base.json
+v2,Nguyễn Mạnh Cường,data/eval_group.json,,,,Thêm 10 team-eval case (5 single-turn, 5 multi-turn),Team eval đo đúng routing, đối số và ngữ cảnh đa lượt,case_accuracy,,,runs/v2_group.json
