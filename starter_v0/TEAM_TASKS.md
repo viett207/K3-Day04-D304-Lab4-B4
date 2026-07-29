@@ -24,7 +24,7 @@ You can replace these labels with actual names.
 
 ---
 
-## Member A: Setup & Baseline lead
+## Member Nguyễn Hoàng Việt: Setup & Baseline lead
 
 ### Responsibilities
 
@@ -88,7 +88,7 @@ You can replace these labels with actual names.
 
 ---
 
-## Member B: UI / Demo lead
+## Member Nguyễn Đức Nam Khánh: UI / Demo lead
 
 ### Responsibilities
 
@@ -140,7 +140,7 @@ You can replace these labels with actual names.
 
 ---
 
-## Member C: Tool + Eval lead
+## Member Nguyễn Mạnh Cường: Tool + Eval lead
 
 ### Responsibilities
 
