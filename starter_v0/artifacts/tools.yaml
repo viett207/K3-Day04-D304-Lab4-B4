@@ -9,7 +9,7 @@
 tools:
   # ---------------- Core tools ----------------
   - name: clarify
-    description: "Gửi một câu hỏi cho người dùng."
+    description: "Hỏi lại người dùng khi thông tin thiếu hoặc cần xác nhận trước hành động nhạy cảm."
     parameters:
       type: object
       properties:
@@ -19,45 +19,66 @@ tools:
       required: [question]
 
   - name: timeline
-    description: "Lấy các bài đăng gần đây."
+    description: "Lấy các bài đăng gần đây của một tài khoản cụ thể."
     parameters:
       type: object
       properties:
         screenname: {type: string, default: "", description: "Tên tài khoản"}
-        limit: {type: integer, default: 5, description: "Số lượng"}
+        limit: {type: integer, default: 5, description: "Số lượng bài"}
       required: [screenname]
 
   - name: social_search
-    description: "Tìm trên mạng xã hội."
+    description: "Tìm bài đăng và thảo luận theo chủ đề trên mạng xã hội."
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Từ khóa"}
+        query: {type: string, default: "", description: "Từ khóa tìm kiếm"}
         search_type: {type: string, enum: [Latest, Top], default: "Latest", description: "Cách sắp xếp"}
-        limit: {type: integer, default: 5, description: "Số lượng"}
+        limit: {type: integer, default: 5, description: "Số lượng bài"}
       required: [query]
 
   - name: lookup
-    description: "Tra cứu thông tin trên internet."
+    description: "Tìm thông tin và tin tức trên web cho một xu hướng AI."
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Truy vấn"}
-        topic: {type: string, enum: [general, news], default: "general", description: "Phân loại"}
+        query: {type: string, default: "", description: "Truy vấn tìm kiếm"}
+        topic: {type: string, enum: [general, news], default: "general", description: "Loại nội dung"}
         timeframe: {type: string, enum: [day, week, month, year], default: "week", description: "Khoảng thời gian"}
         max_results: {type: integer, default: 5, description: "Số kết quả"}
       required: [query]
 
   - name: fetch
-    description: "Lấy nội dung từ một địa chỉ."
+    description: "Đọc nội dung từ một URL cụ thể."
     parameters:
       type: object
       properties:
-        url: {type: string, default: "", description: "Địa chỉ"}
+        url: {type: string, default: "", description: "Địa chỉ URL"}
       required: [url]
 
+  - name: evidence_judge
+    description: "Đánh giá evidence đã thu thập và trả về điểm hype/evidence/adoption/risk cùng verdict."
+    parameters:
+      type: object
+      properties:
+        topic: {type: string, default: "", description: "Chủ đề trend"}
+        positive_evidence:
+          type: array
+          default: []
+          items: {type: string}
+          description: "Các ghi nhận tích cực hoặc dấu hiệu ủng hộ trend"
+        negative_evidence:
+          type: array
+          default: []
+          items: {type: string}
+          description: "Các ghi nhận tiêu cực, rủi ro hoặc hạn chế"
+        paper_count: {type: integer, default: 0, description: "Số bài báo/research có liên quan"}
+        real_world_examples: {type: integer, default: 0, description: "Số ví dụ thực tế/ứng dụng"}
+        hype_signals: {type: integer, default: 0, description: "Số tín hiệu hype hoặc quảng cáo"}
+      required: [topic]
+
   - name: format
-    description: "Trình bày dữ liệu đã có thành văn bản."
+    description: "Trình bày dữ liệu đã có thành markdown digest hoặc báo cáo ngắn."
     parameters:
       type: object
       properties:

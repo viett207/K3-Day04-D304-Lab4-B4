@@ -17,6 +17,7 @@ from .policy.tool import search_company_policy
 from .social_search.tool import search_tweets
 from .send.tool import send_telegram
 from .lookup.tool import web_search
+from .evidence_judge.tool import judge_evidence
 
 
 # NOTE (starter_v0): tool names here are intentionally vague. These keys are the
@@ -30,6 +31,7 @@ TOOL_FUNCTIONS = {
     "social_search": search_tweets,
     "lookup": web_search,
     "fetch": read_url,
+    "evidence_judge": judge_evidence,
     "format": render_digest,
     "send": send_telegram,
     "policy": search_company_policy,

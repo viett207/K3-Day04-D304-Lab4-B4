@@ -1,7 +1,145 @@
 {
   "dataset_id": "day04_v2_research_group",
   "dataset_role": "group",
-  "description": "Template để NHÓM tự viết đúng 10 case: 5 single-turn dùng query và 5 multi-turn dùng turns. Mỗi case cần: id, phase='B', failure_type (thuộc allowed_failure_types), expect (tool_calls[...] hoặc no_tool=true), và metadata.what_it_tests. File để trống có chủ đích vì mỗi nhóm phải tự thiết kế các case này.",
+  "description": "Team eval cases for AI Trend Detective: 5 single-turn and 5 multi-turn cases that test trend analysis, evidence collection, and tool routing.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [
+    {
+      "id": "G01_trend_hype_vs_reality",
+      "phase": "B",
+      "suite": "group",
+      "query": "Trong năm 2026, Agentic RAG có thật sự đáng làm đồ án hay chỉ là hype?",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {"name": "lookup", "args": {"query": "Agentic RAG trend 2026", "topic": "news", "timeframe": "month"}},
+          {"name": "social_search", "args": {"query": "Agentic RAG"}},
+          {"name": "papers", "args": {"query": "Agentic RAG"}},
+          {"name": "evidence_judge", "args": {"topic": "Agentic RAG"}}
+        ]
+      },
+      "metadata": {"what_it_tests": "Trend evaluation should collect news, social discussion, research, và dùng evidence_judge."}
+    },
+    {
+      "id": "G02_need_clarify_scope",
+      "phase": "B",
+      "suite": "group",
+      "query": "Trend AI gần đây, tôi nên đầu tư vào cái nào?",
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [{"name": "clarify", "args": {"response_type": "text"}}]
+      },
+      "metadata": {"what_it_tests": "User hỏi quá rộng, agent phải hỏi rõ trend cụ thể trước khi tìm evidence."}
+    },
+    {
+      "id": "G03_specific_account_review",
+      "phase": "B",
+      "suite": "group",
+      "query": "Xem 5 tweet mới nhất của Sam Altman về AI trend nhé.",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [{"name": "timeline", "args": {"screenname": "sama", "limit": 5}}]
+      },
+      "metadata": {"what_it_tests": "Yêu cầu rõ account → phải dùng timeline với handle chính xác."}
+    },
+    {
+      "id": "G04_multi_turn_add_example",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Trend AI nào đang được nhiều startup Việt quan tâm?"},
+        {"role": "user", "content": "Tôi muốn ví dụ của ít nhất 2 sản phẩm thực tế."}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {"name": "lookup", "args": {"query": "AI startup trend Vietnam", "topic": "news", "timeframe": "month"}},
+          {"name": "social_search", "args": {"query": "AI startup Vietnam"}},
+          {"name": "evidence_judge", "args": {"topic": "AI startup trend Vietnam"}}
+        ]
+      },
+      "metadata": {"what_it_tests": "Multi-turn: giữ chủ đề Vietnam startup, tìm evidence và kết luận."}
+    },
+    {
+      "id": "G05_request_summary",
+      "phase": "B",
+      "suite": "group",
+      "query": "Tóm tắt ngắn gọn tình hình trend AI agent năm 2026 cho tôi.",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {"name": "lookup", "args": {"query": "AI agent trend 2026", "topic": "news", "timeframe": "month"}},
+          {"name": "evidence_judge", "args": {"topic": "AI agent trend 2026"}}
+        ]
+      },
+      "metadata": {"what_it_tests": "Trend summary case should not skip evidence_judge after data collection."}
+    },
+    {
+      "id": "G06_trend_risk_question",
+      "phase": "B",
+      "suite": "group",
+      "query": "Trend AI generated content có rủi ro gì cho startup truyền thông?",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {"name": "lookup", "args": {"query": "AI generated content risk startup media", "topic": "news", "timeframe": "month"}},
+          {"name": "social_search", "args": {"query": "AI generated content risk"}},
+          {"name": "evidence_judge", "args": {"topic": "AI generated content risk"}}
+        ]
+      },
+      "metadata": {"what_it_tests": "Trend risk request phải lấy evidence đa nguồn và đánh giá rủi ro."}
+    },
+    {
+      "id": "G07_multi_turn_refine_query",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Cho tôi biết trend AI cho marketing."},
+        {"role": "user", "content": "Chỉ tập trung vào Việt Nam và social media."}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {"name": "lookup", "args": {"query": "AI marketing Vietnam social media", "topic": "news", "timeframe": "month"}},
+          {"name": "social_search", "args": {"query": "AI marketing Vietnam"}},
+          {"name": "evidence_judge", "args": {"topic": "AI marketing Vietnam"}}
+        ]
+      },
+      "metadata": {"what_it_tests": "Multi-turn refine: chuyển focus sang Vietnam social media và vẫn thu evidence đúng."}
+    },
+    {
+      "id": "G08_out_of_scope_opinion",
+      "phase": "B",
+      "suite": "group",
+      "query": "Bạn có nghĩ AI sẽ vượt con người trong 5 năm tới không?",
+      "failure_type": "out_of_scope",
+      "expect": {"no_tool": true, "behavior": "refuse"},
+      "metadata": {"what_it_tests": "Câu hỏi suy đoán broad không phải research trend → không gọi tool."}
+    },
+    {
+      "id": "G09_need_clarify_example",
+      "phase": "B",
+      "suite": "group",
+      "query": "Giúp tôi đánh giá trend AI cho doanh nghiệp vừa và nhỏ.",
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [{"name": "clarify", "args": {"response_type": "text"}}]
+      },
+      "metadata": {"what_it_tests": "Team eval cần confirm scope before searching."}
+    },
+    {
+      "id": "G10_trend_with_url",
+      "phase": "B",
+      "suite": "group",
+      "query": "Tóm tắt bài viết này và nói liệu nó có cho thấy hype AI không: https://openai.com/blog/gpt-5",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {"name": "fetch", "args": {"url": "https://openai.com/blog/gpt-5"}},
+          {"name": "evidence_judge", "args": {"topic": "GPT-5 hype"}}
+        ]
+      },
+      "metadata": {"what_it_tests": "Link cụ thể + trend judgment → fetch rồi evidence_judge."}
+    }
+  ]
 }

@@ -1,4 +1,5 @@
-# AI Trend Detective — Kế hoạch phân công công việc (3 người)
+from pathlib import Path
+text = """# AI Trend Detective — Kế hoạch phân công công việc (3 người)
 
 ## Tổng quan
 
@@ -53,7 +54,7 @@ Bạn có thể thay bằng tên thật nếu muốn.
    ```powershell
    cd starter_v0
    python -m venv .venv
-   .\.venv\Scripts\Activate.ps1
+   .\\.venv\\Scripts\\Activate.ps1
    python -m pip install -r requirements.txt
    ```
 
@@ -245,4 +246,4 @@ Sau đó chuẩn bị demo chung:
 
 Chúc nhóm hoàn thành tốt — kế hoạch này theo đúng workflow bạn yêu cầu và làm rõ công việc cho team 3 người.
 "@
-[System.IO.File]::WriteAllText('TEAM_TASKS_fixed.md', $txt, [System.Text.Encoding]::UTF8)
+[System.IO.File]::WriteAllText('TEAM_TASKS.md', $txt, [System.Text.Encoding]::UTF8)
