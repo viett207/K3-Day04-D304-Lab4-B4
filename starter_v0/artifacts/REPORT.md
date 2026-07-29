@@ -4,6 +4,7 @@
 
 - Team: K3-Day04-D304-Lab4-B4
 - Members: Nguyễn Hoàng Việt, Nguyễn Đức Nam Khánh, Nguyễn Mạnh Cường
+- Phân chia công việc ở TEAM_TASKS.md
 - UI: Streamlit (`app.py`)
 - Provider/model: OpenRouter + `openai/gpt-4o-mini` was used for the saved v0 transcripts. Gemini 2.5 Flash was configured for live testing, but its Google project returned `403 PERMISSION_DENIED`; this is a provider/project-access issue, not a valid evaluation result.
 
