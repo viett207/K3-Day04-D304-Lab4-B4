@@ -1,0 +1,1197 @@
+{
+  "run_id": "v3_B_group_openrouter_20260729T122950513150",
+  "version": "v3",
+  "artifact_version": "v3+p70a6c53ad4ae+tf66316988c9f",
+  "prompt_hash": "70a6c53ad4ae936290e03ed2f36881453ec39546fd1c0a05abcef1f54c322da6",
+  "tools_hash": "f66316988c9f8c2c84beded35e28e1bb7b8fcabf61ea645e57f5b03f282839f3",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "C:\\Users\\KHANH\\Documents\\GitHub\\K3-Day04-D304-Lab4-B4\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "C:\\Users\\KHANH\\Documents\\GitHub\\K3-Day04-D304-Lab4-B4\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "Team eval cases for AI Trend Detective: 5 single-turn and 5 multi-turn cases that test trend analysis, evidence collection, and tool routing.",
+  "generated_at": "2026-07-29T12:29:50",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 10,
+    "provider_error_cases": 0,
+    "passed_cases": 3,
+    "case_accuracy": 0.3,
+    "tool_routing_accuracy": 0.3,
+    "argument_accuracy": 0.3,
+    "multiturn_accuracy": 0.0,
+    "failure_counts": {
+      "wrong_tool": 6,
+      "missing_info": 1
+    },
+    "observed_mismatch_counts": {
+      "missing_tool_call": 6,
+      "extra_tool_call": 1
+    }
+  },
+  "results": [
+    {
+      "id": "G01_trend_hype_vs_reality",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Trend evaluation should collect news, social discussion, research, và dùng evidence_judge."
+      },
+      "input": "Trong năm 2026, Agentic RAG có thật sự đáng làm đồ án hay chỉ là hype?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "timeframe": "month"
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {}
+          },
+          {
+            "name": "papers",
+            "args": {}
+          },
+          {
+            "name": "evidence_judge",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Agentic RAG",
+              "topic": "news",
+              "timeframe": "month",
+              "max_results": 5
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Agentic RAG",
+              "search_type": "Top",
+              "limit": 5
+            }
+          },
+          {
+            "name": "papers",
+            "args": {
+              "query": "Agentic RAG",
+              "max_results": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "missing tool call evidence_judge"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "Agentic RAG",
+            "topic": "news",
+            "timeframe": "month",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "web_search",
+            "error": "HTTPError",
+            "message": "401 Client Error: Unauthorized for url: https://api.tavily.com/search"
+          }
+        },
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "Agentic RAG",
+            "search_type": "Top",
+            "limit": 5
+          },
+          "result": {
+            "tool": "search_tweets",
+            "error": "RuntimeError",
+            "message": "Missing RAPIDAPI_KEY env var"
+          }
+        },
+        {
+          "tool": "papers",
+          "args": {
+            "query": "Agentic RAG",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "query": "Agentic RAG",
+            "api_query": "all:Agentic AND all:RAG",
+            "total_results": 1212,
+            "items": [
+              {
+                "arxiv_id": "2510.25518v1",
+                "title": "Retrieval Augmented Generation (RAG) for Fintech: Agentic Design and Evaluation",
+                "summary": "Retrieval-Augmented Generation (RAG) systems often face limitations in specialized domains such as fintech, where domain-specific ontologies, dense terminology, and acronyms complicate effective retrieval and synthesis. This paper introduces an agentic RAG architecture designed to address these challenges through a modular pipeline of specialized agents. The proposed system supports intelligent query reformulation, iterative sub-query decomposition guided by keyphrase extraction, contextual acronym resolution, and cross-encoder-based context re-ranking. We evaluate our approach against a standard RAG baseline using a curated dataset of 85 question--answer--reference triples derived from an enterprise fintech knowledge base. Experimental results demonstrate that the agentic RAG system outperforms the baseline in retrieval precision and relevance, albeit with increased latency. These findings suggest that structured, multi-agent methodologies offer a promising direction for enhancing retrieval robustness in complex, domain-specific settings.",
+                "authors": [
+                  "Thomas Cook",
+                  "Richard Osuagwu",
+                  "Liman Tsatiashvili",
+                  "Vrynsia Vrynsia",
+                  "Koustav Ghosal",
+                  "Maraim Masoud",
+                  "Riccardo Mattivi"
+                ],
+                "published": "2025-10-29T13:41:36Z",
+                "updated": "2025-10-29T13:41:36Z",
+                "url": "http://arxiv.org/abs/2510.25518v1",
+                "pdf_url": "https://arxiv.org/pdf/2510.25518v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.AI",
+                "categories": [
+                  "cs.AI"
+                ]
+              },
+              {
+                "arxiv_id": "2601.07528v2",
+                "title": "From RAG to Agentic RAG for Faithful Islamic Question Answering",
+                "summary": "Large Language Models (LLMs) are increasingly used for Islamic question answering, where ungrounded responses may carry serious religious consequences. Yet standard MCQ/MRC-style evaluations (MCQ: Multiple choice questions, MRC: Machine Reading Comprehension) do not capture key real-world failure modes, notably free-form hallucinations and the ability to abstain when evidence is insufficient. To address this gap, we introduce IslamicFaithQA, a 3,810-item bilingual (Arabic/English) generative benchmark with atomic single-gold answers, which enables direct measurement of hallucination and abstention. We additionally developed an end-to-end grounded Islamic modeling suite consisting of (i) 25K Arabic text-grounded SFT reasoning pairs, (ii) 5K bilingual preference samples for reward-guided alignment, and (iii) a verse-level Qur'an retrieval corpus of ~6k atomic verses (ayat). Building on these resources, we develop an agentic Quran-grounding framework (agentic RAG) that uses structured tool calls for iterative evidence seeking and answer revision. Experiments across Arabic-centric and multilingual LLMs show that retrieval improves correctness and that agentic RAG yields the largest gains beyond standard RAG, achieving state-of-the-art performance and stronger Arabic-English robustness even with a small model (i.e., Qwen3 4B). We made the datasets are publicly available. https://huggingface.co/datasets/QCRI/IslamicFaithQA",
+                "authors": [
+                  "Gagan Bhatia",
+                  "Hamdy Mubarak",
+                  "Mustafa Jarrar",
+                  "George Mikros",
+                  "Fadi Zaraket",
+                  "Mahmoud Alhirthani",
+                  "Mutaz Al-Khatib",
+                  "Logan Cochrane",
+                  "Kareem Darwish",
+                  "Rashid Yahiaoui",
+                  "Firoj Alam"
+                ],
+                "published": "2026-01-12T13:28:28Z",
+                "updated": "2026-06-19T11:23:20Z",
+                "url": "http://arxiv.org/abs/2601.07528v2",
+                "pdf_url": "https://arxiv.org/pdf/2601.07528v2",
+                "source": "arxiv.org",
+                "primary_category": "cs.CL",
+                "categories": [
+                  "cs.CL",
+                  "cs.AI"
+                ]
+              },
+              {
+                "arxiv_id": "2606.21553v1",
+                "title": "Dissecting Agentic RAG: A Component Ablation for Multi-Hop QA with a Local 7B Model",
+                "summary": "Agentic retrieval-augmented generation (RAG) systems combine iterative reasoning loops, query decomposition, and adaptive retrieval to tackle multi-hop question answering. However, the contribution of each component remains poorly understood, particularly under resource-constrained settings using only local language models. Many agentic designs add adaptive retrieval routing and deeper retrieval loops on the assumption that the added complexity helps. To test whether it does, we run a controlled ablation study of a full agentic RAG pipeline evaluated on 5,000 questions from the HotpotQA distractor development set using a local 7B parameter model (Qwen2.5-7B-Instruct). Our full pipeline achieves EM=53.2% and F1=61.6%, compared to a single-pass dense-retrieval baseline of EM=43.1% and F1=54.0%. Across eight ablation conditions, we find that: (1) fixed hybrid retrieval via reciprocal rank fusion consistently outperforms rule-based adaptive routing (+1.8 EM, +1.9 F1), as the routing heuristic over-routes to BM25 by firing on named entities present in nearly all multi-hop sub-questions; (2) two retrieval iterations over the decomposed sub-questions capture 95% of the gains of five, with no meaningful benefit from deeper loops; and (3) query decomposition and cross-encoder reranking each contribute statistically significant but smaller gains (p<0.01 and p<0.001 respectively). Taken together, on a fixed local-model budget, the simpler and fixed choices turn out to be competitive with or better than their adaptive versions: most of the gain comes from running a short retrieval loop, not from adaptive routing or from many iterations. We use no proprietary APIs or large-scale compute.",
+                "authors": [
+                  "Sheroz Shaikh"
+                ],
+                "published": "2026-06-19T15:50:35Z",
+                "updated": "2026-06-19T15:50:35Z",
+                "url": "http://arxiv.org/abs/2606.21553v1",
+                "pdf_url": "https://arxiv.org/pdf/2606.21553v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CL",
+                "categories": [
+                  "cs.CL",
+                  "cs.IR"
+                ]
+              },
+              {
+                "arxiv_id": "2605.05287v1",
+                "title": "Securing the Agent: Vendor-Neutral, Multitenant Enterprise Retrieval and Tool Use",
+                "summary": "Retrieval-Augmented Generation (RAG) and agentic AI systems are increasingly prevalent in enterprise AI deployments. However, real enterprise environments introduce challenges largely absent from academic treatments and consumer-facing APIs: multiple tenants with heterogeneous data, strict access-control requirements, regulatory compliance, and cost pressures that demand shared infrastructure. A fundamental problem underlies existing RAG architectures in these settings: retrieval systems rank documents by relevance--whether through semantic similarity, keyword matching, or hybrid approaches--not by authorization, so a query from one tenant can surface another tenant's confidential data simply because it scores highest. We formalize this gap and analyze additional shortcomings--including tool-mediated disclosure, context accumulation across turns, and client-side orchestration bypass--that arise when agentic systems conflate relevance with authorization. To address these challenges, we introduce a layered isolation architecture combining policy-aware ingestion, retrieval-time gating, and shared inference, enforced through server-side agentic orchestration. This approach centralizes security-critical operations--tool execution authorization, state isolation, and policy enforcement--on the server, creating natural enforcement points for multitenant isolation while allowing client-side frameworks to retain control over agent composition and latency-sensitive operations. We validate the proposed architecture through an open-source implementation in OGX, a vendor-neutral framework that implements an OpenAI-compatible, open-source Responses API with server-side multi-turn orchestration. We evaluate it empirically and show that ABAC gating eliminates cross-tenant leakage while introducing negligible overhead.",
+                "authors": [
+                  "Francisco Javier Arceo",
+                  "Varsha Prasad Narsing"
+                ],
+                "published": "2026-05-06T17:59:21Z",
+                "updated": "2026-05-06T17:59:21Z",
+                "url": "http://arxiv.org/abs/2605.05287v1",
+                "pdf_url": "https://arxiv.org/pdf/2605.05287v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CR",
+                "categories": [
+                  "cs.CR",
+                  "cs.AI",
+                  "cs.IR",
+                  "cs.SE"
+                ]
+              },
+              {
+                "arxiv_id": "2510.22344v1",
+                "title": "FAIR-RAG: Faithful Adaptive Iterative Refinement for Retrieval-Augmented Generation",
+                "summary": "While Retrieval-Augmented Generation (RAG) mitigates hallucination and knowledge staleness in Large Language Models (LLMs), existing frameworks often falter on complex, multi-hop queries that require synthesizing information from disparate sources. Current advanced RAG methods, employing iterative or adaptive strategies, lack a robust mechanism to systematically identify and fill evidence gaps, often propagating noise or failing to gather a comprehensive context. We introduce FAIR-RAG, a novel agentic framework that transforms the standard RAG pipeline into a dynamic, evidence-driven reasoning process. At its core is an Iterative Refinement Cycle governed by a module we term Structured Evidence Assessment (SEA). The SEA acts as an analytical gating mechanism: it deconstructs the initial query into a checklist of required findings and audits the aggregated evidence to identify confirmed facts and, critically, explicit informational gaps. These gaps provide a precise signal to an Adaptive Query Refinement agent, which generates new, targeted sub-queries to retrieve missing information. This cycle repeats until the evidence is verified as sufficient, ensuring a comprehensive context for a final, strictly faithful generation. We conducted experiments on challenging multi-hop QA benchmarks, including HotpotQA, 2WikiMultiHopQA, and MusiQue. In a unified experimental setup, FAIR-RAG significantly outperforms strong baselines. On HotpotQA, it achieves an F1-score of 0.453 -- an absolute improvement of 8.3 points over the strongest iterative baseline -- establishing a new state-of-the-art for this class of methods on these benchmarks. Our work demonstrates that a structured, evidence-driven refinement process with explicit gap analysis is crucial for unlocking reliable and accurate reasoning in advanced RAG systems for complex, knowledge-intensive tasks.",
+                "authors": [
+                  "Mohammad Aghajani Asl",
+                  "Majid Asgari-Bidhendi",
+                  "Behrooz Minaei-Bidgoli"
+                ],
+                "published": "2025-10-25T15:59:33Z",
+                "updated": "2025-10-25T15:59:33Z",
+                "url": "http://arxiv.org/abs/2510.22344v1",
+                "pdf_url": "https://arxiv.org/pdf/2510.22344v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CL",
+                "categories": [
+                  "cs.CL",
+                  "cs.AI",
+                  "cs.IR"
+                ]
+              }
+            ],
+            "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+          }
+        }
+      ]
+    },
+    {
+      "id": "G02_need_clarify_scope",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "User hỏi quá rộng, agent phải hỏi rõ trend cụ thể trước khi tìm evidence."
+      },
+      "input": "Trend AI gần đây, tôi nên đầu tư vào cái nào?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có thể cho tôi biết cụ thể về xu hướng AI nào mà bạn đang quan tâm không? Ví dụ: AI trong y tế, tự động hóa, học máy, hay một lĩnh vực cụ thể nào khác?",
+              "response_type": "text"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có thể cho tôi biết cụ thể về xu hướng AI nào mà bạn đang quan tâm không? Ví dụ: AI trong y tế, tự động hóa, học máy, hay một lĩnh vực cụ thể nào khác?",
+            "response_type": "text"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có thể cho tôi biết cụ thể về xu hướng AI nào mà bạn đang quan tâm không? Ví dụ: AI trong y tế, tự động hóa, học máy, hay một lĩnh vực cụ thể nào khác?",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_specific_account_review",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Yêu cầu rõ account → phải dùng timeline với handle chính xác."
+      },
+      "input": "Xem 5 tweet mới nhất của Sam Altman về AI trend nhé.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "sama",
+              "limit": 5
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "sama",
+              "limit": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "sama",
+            "limit": 5
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "error": "RuntimeError",
+            "message": "Missing RAPIDAPI_KEY env var"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G04_multi_trend_evidence",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: giữ chủ đề Vietnam startup, tìm evidence và kết luận bằng evidence_judge."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Trend AI nào đang được nhiều startup Việt quan tâm?"
+        },
+        {
+          "role": "user",
+          "content": "Tôi muốn ví dụ của ít nhất 2 sản phẩm thực tế."
+        },
+        {
+          "role": "user",
+          "content": "Dùng evidence_judge để đánh giá kết quả tìm được nhé."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "timeframe": "month"
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {}
+          },
+          {
+            "name": "evidence_judge",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI trends startup Vietnam",
+              "topic": "news",
+              "timeframe": "month",
+              "max_results": 5
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI trends startup Vietnam",
+              "search_type": "Top",
+              "limit": 5
+            }
+          },
+          {
+            "name": "papers",
+            "args": {
+              "query": "AI trends startup Vietnam",
+              "max_results": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "missing tool call evidence_judge",
+          "extra tool call papers"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI trends startup Vietnam",
+            "topic": "news",
+            "timeframe": "month",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "web_search",
+            "error": "HTTPError",
+            "message": "401 Client Error: Unauthorized for url: https://api.tavily.com/search"
+          }
+        },
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "AI trends startup Vietnam",
+            "search_type": "Top",
+            "limit": 5
+          },
+          "result": {
+            "tool": "search_tweets",
+            "error": "RuntimeError",
+            "message": "Missing RAPIDAPI_KEY env var"
+          }
+        },
+        {
+          "tool": "papers",
+          "args": {
+            "query": "AI trends startup Vietnam",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "query": "AI trends startup Vietnam",
+            "api_query": "all:AI AND all:trends AND all:startup AND all:Vietnam",
+            "total_results": 0,
+            "items": [],
+            "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+          }
+        }
+      ]
+    },
+    {
+      "id": "G05_multi_summary_refine",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn refine: sau khi hỏi rộng, user yêu cầu tóm tắt → phải dùng evidence_judge để ra verdict."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Cho tôi biết tình hình trend AI agent năm 2026."
+        },
+        {
+          "role": "user",
+          "content": "Tóm tắt lại ngắn hơn và đưa ra kết luận verdict rõ ràng."
+        },
+        {
+          "role": "user",
+          "content": "Chỉ tập trung vào AI agent, bỏ các nội dung khác."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "timeframe": "month"
+            }
+          },
+          {
+            "name": "evidence_judge",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI agents",
+              "topic": "news",
+              "timeframe": "month",
+              "max_results": 5
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI agents",
+              "search_type": "Top",
+              "limit": 5
+            }
+          },
+          {
+            "name": "papers",
+            "args": {
+              "query": "AI agents",
+              "max_results": 5
+            }
+          },
+          {
+            "name": "evidence_judge",
+            "args": {
+              "topic": "AI agents"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "extra_tool_call",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "extra tool call social_search",
+          "extra tool call papers"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI agents",
+            "topic": "news",
+            "timeframe": "month",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "web_search",
+            "error": "HTTPError",
+            "message": "401 Client Error: Unauthorized for url: https://api.tavily.com/search"
+          }
+        },
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "AI agents",
+            "search_type": "Top",
+            "limit": 5
+          },
+          "result": {
+            "tool": "search_tweets",
+            "error": "RuntimeError",
+            "message": "Missing RAPIDAPI_KEY env var"
+          }
+        },
+        {
+          "tool": "papers",
+          "args": {
+            "query": "AI agents",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "query": "AI agents",
+            "api_query": "all:AI AND all:agents",
+            "total_results": 11094,
+            "items": [
+              {
+                "arxiv_id": "2510.01751v1",
+                "title": "A cybersecurity AI agent selection and decision support framework",
+                "summary": "This paper presents a novel, structured decision support framework that systematically aligns diverse artificial intelligence (AI) agent architectures, reactive, cognitive, hybrid, and learning, with the comprehensive National Institute of Standards and Technology (NIST) Cybersecurity Framework (CSF) 2.0. By integrating agent theory with industry guidelines, this framework provides a transparent and stepwise methodology for selecting and deploying AI solutions to address contemporary cyber threats. Employing a granular decomposition of NIST CSF 2.0 functions into specific tasks, the study links essential AI agent properties such as autonomy, adaptive learning, and real-time responsiveness to each subcategory's security requirements. In addition, it outlines graduated levels of autonomy (assisted, augmented, and fully autonomous) to accommodate organisations at varying stages of cybersecurity maturity. This holistic approach transcends isolated AI applications, providing a unified detection, incident response, and governance strategy. Through conceptual validation, the framework demonstrates how tailored AI agent deployments can align with real-world constraints and risk profiles, enhancing situational awareness, accelerating response times, and fortifying long-term resilience via adaptive risk management. Ultimately, this research bridges the gap between theoretical AI constructs and operational cybersecurity demands, establishing a foundation for robust, empirically validated multi-agent systems that adhere to industry standards.",
+                "authors": [
+                  "Masike Malatji"
+                ],
+                "published": "2025-10-02T07:38:21Z",
+                "updated": "2025-10-02T07:38:21Z",
+                "url": "http://arxiv.org/abs/2510.01751v1",
+                "pdf_url": "https://arxiv.org/pdf/2510.01751v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.AI",
+                "categories": [
+                  "cs.AI"
+                ]
+              },
+              {
+                "arxiv_id": "2510.09567v1",
+                "title": "Safe, Untrusted, \"Proof-Carrying\" AI Agents: toward the agentic lakehouse",
+                "summary": "Data lakehouses run sensitive workloads, where AI-driven automation raises concerns about trust, correctness, and governance. We argue that API-first, programmable lakehouses provide the right abstractions for safe-by-design, agentic workflows. Using Bauplan as a case study, we show how data branching and declarative environments extend naturally to agents, enabling reproducibility and observability while reducing the attack surface. We present a proof-of-concept in which agents repair data pipelines using correctness checks inspired by proof-carrying code. Our prototype demonstrates that untrusted AI agents can operate safely on production data and outlines a path toward a fully agentic lakehouse.",
+                "authors": [
+                  "Jacopo Tagliabue",
+                  "Ciro Greco"
+                ],
+                "published": "2025-10-10T17:18:36Z",
+                "updated": "2025-10-10T17:18:36Z",
+                "url": "http://arxiv.org/abs/2510.09567v1",
+                "pdf_url": "https://arxiv.org/pdf/2510.09567v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.AI",
+                "categories": [
+                  "cs.AI",
+                  "cs.DB"
+                ]
+              },
+              {
+                "arxiv_id": "2511.02841v2",
+                "title": "AI Agents with Decentralized Identifiers and Verifiable Credentials",
+                "summary": "A fundamental limitation of current LLM-based AI agents is their inability to build differentiated trust among each other at the onset of an agent-to-agent dialogue. However, autonomous and interoperable trust establishment becomes essential once agents start to operate beyond isolated environments and engage in dialogues across individual or organizational boundaries. A promising way to fill this gap in Agentic AI is to equip agents with long-lived digital identities and introduce tamper-proof and flexible identity-bound attestations of agents, provisioned by commonly trusted third parties and designed for cross-domain verifiability. This article presents a conceptual framework and a prototypical multi-agent system, where each agent is endowed with a self-sovereign digital identity. It combines a unique and ledger-anchored W3C Decentralized Identifier (DID) of an agent with a set of third-party issued W3C Verifiable Credentials (VCs). This enables agents at the start of a dialog to prove ownership of their self-controlled DIDs for authentication purposes and to establish various cross-domain trust relationships through the spontaneous exchange of their self-hosted DID-bound VCs. A comprehensive evaluation of the prototypical implementation demonstrates technical feasibility but also reveals limitations once an agent's LLM is in sole charge to control the respective security procedures.",
+                "authors": [
+                  "Sandro Rodriguez Garzon",
+                  "Awid Vaziry",
+                  "Enis Mert Kuzu",
+                  "Dennis Enrique Gehrmann",
+                  "Buse Varkan",
+                  "Alexander Gaballa",
+                  "Axel Küpper"
+                ],
+                "published": "2025-10-01T08:10:37Z",
+                "updated": "2025-12-15T16:24:03Z",
+                "url": "http://arxiv.org/abs/2511.02841v2",
+                "pdf_url": "https://arxiv.org/pdf/2511.02841v2",
+                "source": "arxiv.org",
+                "primary_category": "cs.CR",
+                "categories": [
+                  "cs.CR",
+                  "cs.MA"
+                ]
+              },
+              {
+                "arxiv_id": "2605.23989v1",
+                "title": "Towards trustworthy agentic AI: a comprehensive survey of safety, robustness, privacy, and system security",
+                "summary": "Agentic AI systems -- Large Language Models (LLMs) augmented with planning, tool use, memory, and long-horizon interactions -- can execute complex tasks autonomously, but their multi-step trajectories introduce new failure modes that challenge trustworthiness. This survey provides a focused examination of trustworthy agentic AI through two core dimensions that are critical for high-risk deployments: Safety and Robustness, and Privacy and System Security. For each dimension, we clarify key concepts, identify where risks emerge along the agent workflow, and summarize stage-targeted mitigation strategies. Other trustworthiness aspects (value alignment, transparency, fairness, and accountability) are discussed as relevant context rather than parallel chapters. To support consistent comparison and deployment decisions, we consolidate evaluation into a unified metrics-and-benchmarks hub, emphasizing both outcome and process signals (e.g., constraint violations, trace completeness, and adversarial success rates) and offering scenario-to-metric guidance for release gating. We conclude by outlining open challenges such as self-evolving agents, runtime monitoring and verification, privacy-preserving personalization, and the trust-utility trade-off, and present a case study of real-world security failures in open-source agentic systems. Our goal is to serve as a practical reference for researchers and practitioners building trustworthy agentic systems in high-stakes environments.",
+                "authors": [
+                  "Jinhu Qi",
+                  "Muzhi Li",
+                  "Jiahong Liu",
+                  "Yuqin Shu",
+                  "Dianzhi Yu",
+                  "Shicheng Ma",
+                  "Wenqian Cui",
+                  "Yiyang Zhao",
+                  "Yiyi Chen",
+                  "Ruoxi Jiang",
+                  "Irwin King",
+                  "Zenglin Xu"
+                ],
+                "published": "2026-05-17T10:26:37Z",
+                "updated": "2026-05-17T10:26:37Z",
+                "url": "http://arxiv.org/abs/2605.23989v1",
+                "pdf_url": "https://arxiv.org/pdf/2605.23989v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.AI",
+                "categories": [
+                  "cs.AI",
+                  "cs.CL",
+                  "cs.CR"
+                ]
+              },
+              {
+                "arxiv_id": "2603.17419v1",
+                "title": "Caging the Agents: A Zero Trust Security Architecture for Autonomous AI in Healthcare",
+                "summary": "Autonomous AI agents powered by large language models are being deployed in production with capabilities including shell execution, file system access, database queries, and multi-party communication. Recent red teaming research demonstrates that these agents exhibit critical vulnerabilities in realistic settings: unauthorized compliance with non-owner instructions, sensitive information disclosure, identity spoofing, cross-agent propagation of unsafe practices, and indirect prompt injection through external resources [7]. In healthcare environments processing Protected Health Information, every such vulnerability becomes a potential HIPAA violation. This paper presents a security architecture deployed for nine autonomous AI agents in production at a healthcare technology company. We develop a six-domain threat model for agentic AI in healthcare covering credential exposure, execution capability abuse, network egress exfiltration, prompt integrity failures, database access risks, and fleet configuration drift. We implement four-layer defense in depth: (1) kernel level workload isolation using gVisor on Kubernetes, (2) credential proxy sidecars preventing agent containers from accessing raw secrets, (3) network egress policies restricting each agent to allowlisted destinations, and (4) a prompt integrity framework with structured metadata envelopes and untrusted content labeling. We report results from 90 days of deployment including four HIGH severity findings discovered and remediated by an automated security audit agent, progressive fleet hardening across three VM image generations, and defense coverage mapped to all eleven attack patterns from recent literature. All configurations, audit tooling, and the prompt integrity framework are released as open source.",
+                "authors": [
+                  "Saikat Maiti"
+                ],
+                "published": "2026-03-18T06:54:47Z",
+                "updated": "2026-03-18T06:54:47Z",
+                "url": "http://arxiv.org/abs/2603.17419v1",
+                "pdf_url": "https://arxiv.org/pdf/2603.17419v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CR",
+                "categories": [
+                  "cs.CR",
+                  "cs.AI"
+                ]
+              }
+            ],
+            "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+          }
+        },
+        {
+          "tool": "evidence_judge",
+          "args": {
+            "topic": "AI agents"
+          },
+          "result": {
+            "tool": "evidence_judge",
+            "topic": "AI agents",
+            "positive_evidence": [],
+            "negative_evidence": [],
+            "paper_count": 0,
+            "real_world_examples": 0,
+            "hype_signals": 0,
+            "scores": {
+              "evidence_score": 0,
+              "hype_score": 0,
+              "adoption_score": 0,
+              "risk_score": 0
+            },
+            "verdict": "Mostly hype or too early",
+            "summary": "Topic: AI agents. Evidence 0/100, hype 0/100, adoption 0/100, risk 0/100. Verdict: Mostly hype or too early."
+          }
+        }
+      ]
+    },
+    {
+      "id": "G06_multi_risk_focus",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn risk focus: user dần thu hẹp scope, cuối cùng yêu cầu tìm social evidence về rủi ro."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Trend AI generated content hiện tại như thế nào?"
+        },
+        {
+          "role": "user",
+          "content": "Chỉ tập trung vào rủi ro cho startup truyền thông."
+        },
+        {
+          "role": "user",
+          "content": "Tìm thêm trên mạng xã hội xem mọi người nói gì về rủi ro này."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "timeframe": "month"
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {}
+          },
+          {
+            "name": "evidence_judge",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "rủi ro AI generated content",
+              "search_type": "Latest",
+              "limit": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "missing tool call lookup",
+          "missing tool call evidence_judge"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "rủi ro AI generated content",
+            "search_type": "Latest",
+            "limit": 5
+          },
+          "result": {
+            "tool": "search_tweets",
+            "error": "RuntimeError",
+            "message": "Missing RAPIDAPI_KEY env var"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G07_multi_marketing_vietnam",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn refine: chuyển focus sang Vietnam social media và vẫn thu evidence đúng."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Cho tôi biết trend AI cho marketing."
+        },
+        {
+          "role": "user",
+          "content": "Chỉ tập trung vào Việt Nam và social media."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "timeframe": "month"
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {}
+          },
+          {
+            "name": "evidence_judge",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI marketing Vietnam",
+              "topic": "news",
+              "timeframe": "month",
+              "max_results": 5
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI marketing Vietnam",
+              "search_type": "Top",
+              "limit": 5
+            }
+          },
+          {
+            "name": "papers",
+            "args": {
+              "query": "AI marketing Vietnam",
+              "max_results": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "missing tool call evidence_judge",
+          "extra tool call papers"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI marketing Vietnam",
+            "topic": "news",
+            "timeframe": "month",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "web_search",
+            "error": "HTTPError",
+            "message": "401 Client Error: Unauthorized for url: https://api.tavily.com/search"
+          }
+        },
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "AI marketing Vietnam",
+            "search_type": "Top",
+            "limit": 5
+          },
+          "result": {
+            "tool": "search_tweets",
+            "error": "RuntimeError",
+            "message": "Missing RAPIDAPI_KEY env var"
+          }
+        },
+        {
+          "tool": "papers",
+          "args": {
+            "query": "AI marketing Vietnam",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "query": "AI marketing Vietnam",
+            "api_query": "all:AI AND all:marketing AND all:Vietnam",
+            "total_results": 2,
+            "items": [
+              {
+                "arxiv_id": "2511.14767v1",
+                "title": "An LLM-Powered Agent for Real-Time Analysis of the Vietnamese IT Job Market",
+                "summary": "Individuals entering Vietnam's dynamic Information Technology (IT) job market face a critical gap in reliable career guidance. Existing market reports are often outdated, while the manual analysis of thousands of job postings is impractical for most. To address this challenge, we present the AI Job Market Consultant, a novel conversational agent that delivers deep, data-driven insights directly from the labor market in real-time. The foundation of our system is a custom-built dataset created via an automated pipeline that crawls job portals using Playwright and leverages the Large Language Model (LLM) to intelligently structure unstructured posting data. The core of our system is a tool-augmented AI agent, based on the ReAct agentic framework, which enables the ability of autonomously reasoning, planning, and executing actions through a specialized toolbox for SQL queries, semantic search, and data visualization. Our prototype successfully collected and analyzed 3,745 job postings, demonstrating its ability to answer complex, multi-step queries, generate on-demand visualizations, and provide personalized career advice grounded in real-world data. This work introduces a new paradigm for labor market analysis, showcasing how specialized agentic AI systems can democratize access to timely, trustworthy career intelligence for the next generation of professionals.",
+                "authors": [
+                  "Minh-Thuan Nguyen",
+                  "Thien Vo-Thanh",
+                  "Thai-Duy Dinh",
+                  "Xuan-Quang Phan",
+                  "Tan-Ha Mai",
+                  "Lam-Son Lê"
+                ],
+                "published": "2025-09-26T03:03:12Z",
+                "updated": "2025-09-26T03:03:12Z",
+                "url": "http://arxiv.org/abs/2511.14767v1",
+                "pdf_url": "https://arxiv.org/pdf/2511.14767v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.IR",
+                "categories": [
+                  "cs.IR",
+                  "cs.AI",
+                  "cs.CY"
+                ]
+              },
+              {
+                "arxiv_id": "2603.05262v1",
+                "title": "VietJobs: A Vietnamese Job Advertisement Dataset",
+                "summary": "VietJobs is the first large-scale, publicly available corpus of Vietnamese job advertisements, comprising 48,092 postings and over 15 million words collected from all 34 provinces and municipalities across Vietnam. The dataset provides extensive linguistic and structured information, including job titles, categories, salaries, skills, and employment conditions, covering 16 occupational domains and multiple employment types (full-time, part-time, and internship). Designed to support research in natural language processing and labour market analytics, VietJobs captures substantial linguistic, regional, and socio-economic diversity. We benchmark several generative large language models (LLMs) on two core tasks: job category classification and salary estimation. Instruction-tuned models such as Qwen2.5-7B-Instruct and Llama-SEA-LION-v3-8B-IT demonstrate notable gains under few-shot and fine-tuned settings, while highlighting challenges in multilingual and Vietnamese-specific modelling for structured labour market prediction. VietJobs establishes a new benchmark for Vietnamese NLP and offers a valuable foundation for future research on recruitment language, socio-economic representation, and AI-driven labour market analysis. All code and resources are available at: https://github.com/VinNLP/VietJobs.",
+                "authors": [
+                  "Hieu Pham Dinh",
+                  "Hung Nguyen Huy",
+                  "Mo El-Haj"
+                ],
+                "published": "2026-03-05T15:12:02Z",
+                "updated": "2026-03-05T15:12:02Z",
+                "url": "http://arxiv.org/abs/2603.05262v1",
+                "pdf_url": "https://arxiv.org/pdf/2603.05262v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CL",
+                "categories": [
+                  "cs.CL"
+                ]
+              }
+            ],
+            "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+          }
+        }
+      ]
+    },
+    {
+      "id": "G08_out_of_scope_opinion",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Câu hỏi suy đoán broad không phải research trend → không gọi tool."
+      },
+      "input": "Bạn có nghĩ AI sẽ vượt con người trong 5 năm tới không?",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Tôi không thể đưa ra ý kiến hoặc dự đoán về tương lai, bao gồm cả việc AI có vượt con người hay không. Tuy nhiên, tôi có thể giúp bạn tìm kiếm thông tin và nghiên cứu liên quan đến xu hướng AI hiện tại. Nếu bạn có một chủ đề cụ thể nào đó về AI mà bạn muốn tìm hiểu, hãy cho tôi biết!",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G09_need_clarify_example",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Team eval cần confirm scope before searching."
+      },
+      "input": "Giúp tôi đánh giá trend AI cho doanh nghiệp vừa và nhỏ.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI for small and medium enterprises",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI for small and medium enterprises",
+              "search_type": "Top"
+            }
+          },
+          {
+            "name": "papers",
+            "args": {
+              "query": "AI for small and medium enterprises",
+              "max_results": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "missing_info",
+        "failures": [
+          "missing tool call clarify",
+          "extra tool call lookup",
+          "extra tool call social_search",
+          "extra tool call papers"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI for small and medium enterprises",
+            "topic": "news",
+            "timeframe": "month"
+          },
+          "result": {
+            "tool": "web_search",
+            "error": "HTTPError",
+            "message": "401 Client Error: Unauthorized for url: https://api.tavily.com/search"
+          }
+        },
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "AI for small and medium enterprises",
+            "search_type": "Top"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "error": "RuntimeError",
+            "message": "Missing RAPIDAPI_KEY env var"
+          }
+        },
+        {
+          "tool": "papers",
+          "args": {
+            "query": "AI for small and medium enterprises",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "query": "AI for small and medium enterprises",
+            "api_query": "all:AI AND all:for AND all:small AND all:and AND all:medium AND all:enterprises",
+            "total_results": 0,
+            "items": [],
+            "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+          }
+        }
+      ]
+    },
+    {
+      "id": "G10_trend_with_url",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Link cụ thể + trend judgment → fetch rồi evidence_judge."
+      },
+      "input": "Tóm tắt bài viết này và nói liệu nó có cho thấy hype AI không: https://openai.com/blog/gpt-5",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://openai.com/blog/gpt-5"
+            }
+          },
+          {
+            "name": "evidence_judge",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://openai.com/blog/gpt-5"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "missing tool call evidence_judge"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "fetch",
+          "args": {
+            "url": "https://openai.com/blog/gpt-5"
+          },
+          "result": {
+            "tool": "read_url",
+            "error": "RuntimeError",
+            "message": "Missing FIRECRAWL_API_KEY env var"
+          }
+        }
+      ]
+    }
+  ]
+}

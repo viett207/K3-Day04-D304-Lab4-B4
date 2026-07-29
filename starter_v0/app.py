@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -20,7 +21,8 @@ load_lab_env(ROOT)
 
 
 def safe_slug(value: str) -> str:
-    return "_".join(value.strip().split())[:80] or "run"
+    slug = re.sub(r"[^A-Za-z0-9_.-]+", "_", value.strip())
+    return slug.strip("_") or "run"
 
 
 def now_iso() -> str:
@@ -68,13 +70,18 @@ def main() -> None:
         messages = [{"role": "system", "content": system_prompt_text}, {"role": "user", "content": query.strip()}]
 
         with st.spinner("Đang chạy agent ..."):
-            result = run_model_tool_loop(
-                provider=provider,
-                messages=messages,
-                tools=openai_tools,
-                model=selected_model,
-                max_tool_rounds=int(max_tool_rounds),
-            )
+            try:
+                result = run_model_tool_loop(
+                    provider=provider,
+                    messages=messages,
+                    tools=openai_tools,
+                    model=selected_model,
+                    max_tool_rounds=int(max_tool_rounds),
+                )
+            except Exception as exc:
+                st.error(f"❌ Lỗi agent: **{type(exc).__name__}**: {exc}")
+                st.info("Kiểm tra API key trong .env và thử lại.")
+                st.stop()
 
         st.success("Hoàn tất")
         st.write("## Kết quả tổng quan")

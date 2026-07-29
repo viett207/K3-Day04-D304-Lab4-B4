@@ -12,10 +12,10 @@
       "failure_type": "wrong_tool",
       "expect": {
         "tool_calls": [
-          {"name": "lookup", "args": {"query": "Agentic RAG trend 2026", "topic": "news", "timeframe": "month"}},
-          {"name": "social_search", "args": {"query": "Agentic RAG"}},
-          {"name": "papers", "args": {"query": "Agentic RAG"}},
-          {"name": "evidence_judge", "args": {"topic": "Agentic RAG"}}
+          {"name": "lookup", "args": {"topic": "news", "timeframe": "month"}},
+          {"name": "social_search", "args": {}},
+          {"name": "papers", "args": {}},
+          {"name": "evidence_judge", "args": {}}
         ]
       },
       "metadata": {"what_it_tests": "Trend evaluation should collect news, social discussion, research, và dùng evidence_judge."}
@@ -43,54 +43,63 @@
       "metadata": {"what_it_tests": "Yêu cầu rõ account → phải dùng timeline với handle chính xác."}
     },
     {
-      "id": "G04_multi_turn_add_example",
+      "id": "G04_multi_trend_evidence",
       "phase": "B",
       "suite": "group",
       "turns": [
         {"role": "user", "content": "Trend AI nào đang được nhiều startup Việt quan tâm?"},
-        {"role": "user", "content": "Tôi muốn ví dụ của ít nhất 2 sản phẩm thực tế."}
+        {"role": "user", "content": "Tôi muốn ví dụ của ít nhất 2 sản phẩm thực tế."},
+        {"role": "user", "content": "Dùng evidence_judge để đánh giá kết quả tìm được nhé."}
       ],
       "failure_type": "wrong_tool",
       "expect": {
         "tool_calls": [
-          {"name": "lookup", "args": {"query": "AI startup trend Vietnam", "topic": "news", "timeframe": "month"}},
-          {"name": "social_search", "args": {"query": "AI startup Vietnam"}},
-          {"name": "evidence_judge", "args": {"topic": "AI startup trend Vietnam"}}
+          {"name": "lookup", "args": {"topic": "news", "timeframe": "month"}},
+          {"name": "social_search", "args": {}},
+          {"name": "evidence_judge", "args": {}}
         ]
       },
-      "metadata": {"what_it_tests": "Multi-turn: giữ chủ đề Vietnam startup, tìm evidence và kết luận."}
+      "metadata": {"what_it_tests": "Multi-turn: giữ chủ đề Vietnam startup, tìm evidence và kết luận bằng evidence_judge."}
     },
     {
-      "id": "G05_request_summary",
+      "id": "G05_multi_summary_refine",
       "phase": "B",
       "suite": "group",
-      "query": "Tóm tắt ngắn gọn tình hình trend AI agent năm 2026 cho tôi.",
+      "turns": [
+        {"role": "user", "content": "Cho tôi biết tình hình trend AI agent năm 2026."},
+        {"role": "user", "content": "Tóm tắt lại ngắn hơn và đưa ra kết luận verdict rõ ràng."},
+        {"role": "user", "content": "Chỉ tập trung vào AI agent, bỏ các nội dung khác."}
+      ],
       "failure_type": "wrong_tool",
       "expect": {
         "tool_calls": [
-          {"name": "lookup", "args": {"query": "AI agent trend 2026", "topic": "news", "timeframe": "month"}},
-          {"name": "evidence_judge", "args": {"topic": "AI agent trend 2026"}}
+          {"name": "lookup", "args": {"topic": "news", "timeframe": "month"}},
+          {"name": "evidence_judge", "args": {}}
         ]
       },
-      "metadata": {"what_it_tests": "Trend summary case should not skip evidence_judge after data collection."}
+      "metadata": {"what_it_tests": "Multi-turn refine: sau khi hỏi rộng, user yêu cầu tóm tắt → phải dùng evidence_judge để ra verdict."}
     },
     {
-      "id": "G06_trend_risk_question",
+      "id": "G06_multi_risk_focus",
       "phase": "B",
       "suite": "group",
-      "query": "Trend AI generated content có rủi ro gì cho startup truyền thông?",
+      "turns": [
+        {"role": "user", "content": "Trend AI generated content hiện tại như thế nào?"},
+        {"role": "user", "content": "Chỉ tập trung vào rủi ro cho startup truyền thông."},
+        {"role": "user", "content": "Tìm thêm trên mạng xã hội xem mọi người nói gì về rủi ro này."}
+      ],
       "failure_type": "wrong_tool",
       "expect": {
         "tool_calls": [
-          {"name": "lookup", "args": {"query": "AI generated content risk startup media", "topic": "news", "timeframe": "month"}},
-          {"name": "social_search", "args": {"query": "AI generated content risk"}},
-          {"name": "evidence_judge", "args": {"topic": "AI generated content risk"}}
+          {"name": "lookup", "args": {"topic": "news", "timeframe": "month"}},
+          {"name": "social_search", "args": {}},
+          {"name": "evidence_judge", "args": {}}
         ]
       },
-      "metadata": {"what_it_tests": "Trend risk request phải lấy evidence đa nguồn và đánh giá rủi ro."}
+      "metadata": {"what_it_tests": "Multi-turn risk focus: user dần thu hẹp scope, cuối cùng yêu cầu tìm social evidence về rủi ro."}
     },
     {
-      "id": "G07_multi_turn_refine_query",
+      "id": "G07_multi_marketing_vietnam",
       "phase": "B",
       "suite": "group",
       "turns": [
@@ -100,9 +109,9 @@
       "failure_type": "wrong_tool",
       "expect": {
         "tool_calls": [
-          {"name": "lookup", "args": {"query": "AI marketing Vietnam social media", "topic": "news", "timeframe": "month"}},
-          {"name": "social_search", "args": {"query": "AI marketing Vietnam"}},
-          {"name": "evidence_judge", "args": {"topic": "AI marketing Vietnam"}}
+          {"name": "lookup", "args": {"topic": "news", "timeframe": "month"}},
+          {"name": "social_search", "args": {}},
+          {"name": "evidence_judge", "args": {}}
         ]
       },
       "metadata": {"what_it_tests": "Multi-turn refine: chuyển focus sang Vietnam social media và vẫn thu evidence đúng."}
@@ -136,7 +145,7 @@
       "expect": {
         "tool_calls": [
           {"name": "fetch", "args": {"url": "https://openai.com/blog/gpt-5"}},
-          {"name": "evidence_judge", "args": {"topic": "GPT-5 hype"}}
+          {"name": "evidence_judge", "args": {}}
         ]
       },
       "metadata": {"what_it_tests": "Link cụ thể + trend judgment → fetch rồi evidence_judge."}

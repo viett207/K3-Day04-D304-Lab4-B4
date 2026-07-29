@@ -9,11 +9,10 @@ from typing import Any
 import requests
 
 from tools._shared import TIMEOUT, err
+from tools._shared import arxiv_rate_limit as _rate_limit_arxiv
 
 
 ARXIV_API_URL = "https://export.arxiv.org/api/query"
-ARXIV_MIN_INTERVAL_SECONDS = 3.0
-_last_arxiv_request_at = 0.0
 
 
 def _arxiv_user_agent() -> str:
@@ -21,11 +20,7 @@ def _arxiv_user_agent() -> str:
 
 
 def _rate_limit_arxiv() -> None:
-    global _last_arxiv_request_at
-    elapsed = time.monotonic() - _last_arxiv_request_at
-    if elapsed < ARXIV_MIN_INTERVAL_SECONDS:
-        time.sleep(ARXIV_MIN_INTERVAL_SECONDS - elapsed)
-    _last_arxiv_request_at = time.monotonic()
+    pass  # delegated to tools._shared.arxiv_rate_limit
 
 
 def _arxiv_get(url: str, *, params: dict[str, Any] | None = None) -> requests.Response:

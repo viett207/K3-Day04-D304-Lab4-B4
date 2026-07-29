@@ -209,14 +209,14 @@ You can replace these labels with actual names.
 
 1. Nguyễn Hoàng Việt reports baseline status and `v0` metrics.
 2. Nguyễn Đức Nam Khánh confirms UI works and shows the trace.
-3. NNguyễn Mạnh Cường shares tool implementation and eval cases.
+3. Nguyễn Mạnh Cường shares tool implementation and eval cases.
 4. Agree on any prompt/tool wording changes together.
 
 ### File ownership summary
 
 - `Nguyễn Hoàng Việt`: `artifacts/system_prompt.md`, baseline `v0`, preflight checks, `artifacts/version_log.csv`.
 - `Nguyễn Đức Nam Khánh`: `app.py`, UI trace display, `requirements.txt`, demo writeup in `artifacts/REPORT.md`
-- `NNguyễn Mạnh Cường`: `tools/evidence_judge`, `tools/__init__.py`, `artifacts/tools.yaml`, `data/eval_group.json`, `run_eval` for team eval.
+- `Nguyễn Mạnh Cường`: `tools/evidence_judge`, `tools/__init__.py`, `artifacts/tools.yaml`, `data/eval_group.json`, `run_eval` for team eval.
 
 ---
 
@@ -226,7 +226,7 @@ Each member should verify one demo artifact:
 
 - Nguyễn Hoàng Việt: `python run_eval.py --provider openrouter --version v0 --suite base --eval-cases data/eval_base.json`
 - Nguyễn Đức Nam Khánh: `streamlit run app.py` works and UI shows tool trace.
-- NNguyễn Mạnh Cường: `python run_eval.py --provider openrouter --version v2 --suite group --eval-cases data/eval_group.json`
+- Nguyễn Mạnh Cường: `python run_eval.py --provider openrouter --version v2 --suite group --eval-cases data/eval_group.json`
 
 Then prepare a final joint demo with:
 

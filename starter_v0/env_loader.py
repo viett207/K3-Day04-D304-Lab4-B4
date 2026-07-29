@@ -6,6 +6,8 @@ from pathlib import Path
 
 def load_dotenv(path: Path, *, override: bool = True) -> None:
     if not path.exists():
+        import sys
+        print(f"[env_loader] Warning: {path} not found — API keys will not be loaded from this path.", file=sys.stderr)
         return
     for raw_line in path.read_text(encoding="utf-8").splitlines():
         line = raw_line.strip()

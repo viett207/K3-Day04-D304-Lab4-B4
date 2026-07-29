@@ -38,7 +38,7 @@ class AnthropicProvider:
         self,
         *,
         api_key_env: str = "ANTHROPIC_API_KEY",
-        default_model: str = "claude-haiku-4-5-20251001",
+        default_model: str = "claude-3-haiku-20240307",
     ) -> None:
         self.api_key_env = api_key_env
         self.default_model = default_model

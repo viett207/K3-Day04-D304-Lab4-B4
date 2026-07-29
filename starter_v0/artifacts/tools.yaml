@@ -1,11 +1,4 @@
-# starter_v0 — tool declarations (intentionally vague).
-# Names and descriptions here are a rough first draft. Routing rules, name->handle
-# mapping, arg conventions (news/timeframe/Top), and the send-confirmation boundary
-# are NOT spelled out anywhere yet. Your job is to make these declarations + the
-# system prompt good enough that the agent routes correctly on the eval.
-#
-# If you rename a tool, keep the name in sync across:
-#   this file  ->  tools/__init__.py (TOOL_FUNCTIONS)  ->  data/eval_base.json + data/eval_research_extension.json
+# starter_v0 — tool declarations
 tools:
   # ---------------- Core tools ----------------
   - name: clarify
@@ -23,7 +16,7 @@ tools:
     parameters:
       type: object
       properties:
-        screenname: {type: string, default: "", description: "Tên tài khoản"}
+        screenname: {type: string, default: "", description: "Tên tài khoản (handle, vd: sama, elonmusk, karpathy)"}
         limit: {type: integer, default: 5, description: "Số lượng bài"}
       required: [screenname]
 
@@ -33,7 +26,7 @@ tools:
       type: object
       properties:
         query: {type: string, default: "", description: "Từ khóa tìm kiếm"}
-        search_type: {type: string, enum: [Latest, Top], default: "Latest", description: "Cách sắp xếp"}
+        search_type: {type: string, enum: [Latest, Top], default: "Latest", description: "Cách sắp xếp (Top nếu user yêu cầu phổ biến/top)"}
         limit: {type: integer, default: 5, description: "Số lượng bài"}
       required: [query]
 
@@ -43,8 +36,8 @@ tools:
       type: object
       properties:
         query: {type: string, default: "", description: "Truy vấn tìm kiếm"}
-        topic: {type: string, enum: [general, news], default: "general", description: "Loại nội dung"}
-        timeframe: {type: string, enum: [day, week, month, year], default: "week", description: "Khoảng thời gian"}
+        topic: {type: string, enum: [general, news], default: "general", description: "Loại nội dung (news nếu tìm tin tức)"}
+        timeframe: {type: string, enum: [day, week, month, year], default: "week", description: "Khoảng thời gian (day cho hôm nay, week cho tuần này, month cho mặc định trend)"}
         max_results: {type: integer, default: 5, description: "Số kết quả"}
       required: [query]
 
@@ -57,7 +50,7 @@ tools:
       required: [url]
 
   - name: evidence_judge
-    description: "Đánh giá evidence đã thu thập và trả về điểm hype/evidence/adoption/risk cùng verdict."
+    description: "Đánh giá evidence đã thu thập và trả về điểm hype/evidence/adoption/risk cùng verdict. Luôn gọi chung với các công cụ thu thập thông tin khi user yêu cầu đánh giá trend."
     parameters:
       type: object
       properties:
@@ -119,7 +112,7 @@ tools:
       required: [query]
 
   - name: papers
-    description: "Tìm bài báo khoa học."
+    description: "Tìm bài báo khoa học trên arXiv."
     parameters:
       type: object
       properties:

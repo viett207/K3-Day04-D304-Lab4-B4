@@ -59,7 +59,7 @@ def validate_expected_tools(cases: list[dict[str, Any]], declarations: list[dict
             if name not in declared:
                 invalid.append(f"{case.get('id', '<missing id>')}: {name!r} not declared in tools.yaml")
             elif name not in implemented:
-                invalid.append(f"{case.get('id', '<missing id>')}: {name!r} has no implementation in tools.py")
+                invalid.append(f"{case.get('id', '<missing id>')}: {name!r} has no implementation in tools/__init__.py (TOOL_FUNCTIONS)")
     if invalid:
         raise ValueError(f"Invalid expected tool in {path}: {'; '.join(invalid)}")
 
@@ -261,7 +261,7 @@ def print_table(results: list[dict[str, Any]], summary: dict[str, Any]) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run Research Agent live evals.")
-    parser.add_argument("--phase", choices=["B"], default="B")
+    parser.add_argument("--phase", default="B", help="Eval phase to run (currently only 'B' is supported).")
     parser.add_argument("--suite", choices=["base", "group", "cross", "extension"], default="base", help="Run label saved to JSON; does not filter --eval-cases.")
     parser.add_argument("--version", required=True)
     parser.add_argument("--provider", choices=["openai", "openrouter", "anthropic", "gemini"], required=True)

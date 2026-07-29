@@ -6,9 +6,9 @@
 
 ## Team
 
-- Team:
-- Members:
-- Provider/model:
+- **Team:** K3-Day04-D304-Lab4-B4
+- **Members:** Nguyễn Hoàng Việt (Setup), Nguyễn Đức Nam Khánh (UI/Demo), Nguyễn Mạnh Cường (Tool/Eval)
+- **Provider/model:** OpenRouter / qwen/qwen3-235b-a22b:free (có thể thay bằng openai/gpt-4o-mini)
 
 ---
 
@@ -16,41 +16,46 @@
 
 ## A1. Agent này làm được gì
 
-> 1–2 câu mô tả agent dùng để làm gì.
-
-Ví dụ: "Research agent: tìm tin theo từ khóa / theo tài khoản, đọc URL và tổng hợp thành digest."
+**AI Trend Detective** — Research agent chuyên theo dõi và phân tích xu hướng AI. Agent nhận yêu cầu của người dùng, tự động chọn tool phù hợp để thu thập thông tin từ nhiều nguồn (web, Twitter/X, arXiv, URL cụ thể), tổng hợp bằng chứng và đưa ra verdict về mức độ hype vs. thực chất của các trend AI.
 
 **Link dùng thử (truy cập được trong showdown):**
 
-> Dán public URL nếu người khác cần mở từ máy riêng; localhost cũng được nếu demo trực tiếp trên máy trình chiếu. Streamlit được khuyến nghị, nhưng nhóm có thể dùng bất kỳ framework nào.
+> Chạy local: `streamlit run app.py` → mở `http://localhost:8501`
 >
-> URL:
+> Public URL (Cloudflare Tunnel, điền sau khi khởi động): ___________________
 
 ## A2. Tool agent có
 
-> Liệt kê các tool agent đang dùng. Mỗi tool 1 dòng: tên + làm được gì.
-
 | Tên tool | Làm được gì | Tool mới nhóm thêm? |
 |---|---|---|
-| clarify | hỏi lại người dùng khi thiếu thông tin | không |
-|  |  |  |
-|  |  |  |
+| `clarify` | Hỏi lại user khi thiếu thông tin hoặc cần xác nhận yes/no trước hành động nhạy cảm | không |
+| `timeline` | Lấy tweet/post gần đây của một tài khoản X theo handle | không |
+| `social_search` | Tìm tweet theo từ khóa (Latest hoặc Top), dùng RapidAPI | không |
+| `lookup` | Tìm kiếm web qua Tavily (topic: news/general, timeframe: day/week/month) | không |
+| `fetch` | Đọc và trích xuất nội dung HTML của một URL cụ thể | không |
+| `format` | Trình bày danh sách items thành markdown digest có cấu trúc | không |
+| `evidence_judge` | **Tool mới**: nhận danh sách evidence từ nhiều nguồn, tính điểm hype/reality và trả verdict | **CÓ** |
+| `send` | Gửi văn bản lên Telegram channel (optional, cần xác nhận trước) | không |
+| `policy` | Tìm trong company policy markdown nội bộ | không |
+| `papers` | Tìm paper nghiên cứu trên arXiv theo từ khóa | không |
+| `paper_text` | Tải PDF arXiv và trích text theo số trang | không |
 
 ## A3. Câu hỏi mẫu để thử
 
-> 3–5 câu hỏi/yêu cầu mẫu để team khác tự thử agent ngay.
-
-1.
-2.
-3.
+1. `Tweet mới nhất của Sam Altman là gì?` → agent dùng `timeline(screenname="sama")`
+2. `Mọi người đang bàn gì về GPT-5 trên Twitter?` → agent dùng `social_search(query="GPT-5")`
+3. `Tin tức AI hôm nay có gì nổi bật?` → agent dùng `lookup(topic="news", timeframe="day")`
+4. `Tóm tắt bài này giúp mình: https://openai.com/blog/gpt-5` → agent dùng `fetch(url="...")`
+5. `Agentic RAG có đáng đầu tư không hay chỉ là hype?` → agent dùng `lookup + social_search + papers + evidence_judge`
 
 ## A4. Kịch bản demo đã rehearse
 
-> Chuẩn bị 3–5 scenario. Mỗi scenario cần cho thấy tool đã làm gì và một thay đổi cụ thể giữa các version.
-
 | Scenario | Tool trace cần thấy | Câu chuyện cải thiện version | Fallback run/transcript |
 |---|---|---|---|
-|  |  |  |  |
+| Trend hype detection (Agentic RAG) | `lookup` → `social_search` → `papers` → `evidence_judge` | v0 chỉ dùng `lookup`; v1 thêm `evidence_judge` cho verdict rõ ràng | `runs/v1_base.json`, case G01 |
+| Missing handle → clarify | `clarify(response_type="text")` → user reply → `timeline` | v0 đoán bừa handle; v1 hỏi lại → chính xác hơn | `transcripts/` multi-turn session |
+| Confirm trước khi gửi Telegram | `clarify(response_type="yes_no")` → KHÔNG tự gọi `send` | Kiểm tra boundary safety | case R12 trong `runs/v0_base.json` |
+| Search 2 nguồn song song | `lookup` + `social_search` trong cùng một round | v2 gọi parallel tools; v0 chỉ gọi một | case R13 / G01 |
 
 ---
 
