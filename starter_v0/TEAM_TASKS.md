@@ -1,248 +1,246 @@
 # AI Trend Detective — Kế hoạch phân công công việc (3 người)
 
-## Tổng quan
+## Overview
 
-File này chia công việc lab thành ba vai trò và giải thích rõ mỗi thành viên cần làm gì. Mục tiêu là thực hiện theo thứ tự:
+This file divides the lab work into three roles and explains exactly what each member should do. The goal is to follow the workflow you requested:
 
 1. Setup & preflight
 2. Baseline v0 + UI
-3. v1 + tool mới
+3. v1 + new tool
 4. Team eval = v2
-5. Ra demo cuối
+5. Final demo
 
-Mỗi người có phần việc chính, nhưng vẫn phải phối hợp chặt chẽ và review chéo để đảm bảo artifact nhất quán.
+Each member should own a primary area but collaborate closely, review each other's work, and keep the artifact state consistent.
 
 ---
 
-## Vai trò trong team
+## Team roles
 
 - **Nguyễn Hoàng Việt — Setup & Baseline lead**
 - **Nguyễn Đức Nam Khánh — UI / Demo lead**
 - **Nguyễn Mạnh Cường — Tool + Eval lead**
 
-Bạn có thể thay bằng tên thật nếu muốn.
+You can replace these labels with actual names.
 
 ---
 
-## Nguyễn Hoàng Việt: Setup & Baseline lead
+## Member Nguyễn Hoàng Việt: Setup & Baseline lead
 
-### Trách nhiệm
+### Responsibilities
 
-- Cài và kiểm tra môi trường Python.
-- Cấu hình `.env` và credential của provider.
-- Chạy kiểm tra preflight provider.
-- Xây prompt và tool baseline cho `v0`.
-- Chạy baseline eval và thu bằng chứng.
-- Cập nhật `artifacts/version_log.csv` cho `v0`.
+- Install and verify environment.
+- Configure `.env` and provider credentials.
+- Run preflight provider checks.
+- Build the baseline `v0` prompt + tool declarations.
+- Run baseline evaluation and collect baseline evidence.
+- Keep `artifacts/version_log.csv` updated for `v0`.
 
-### Kết quả cần đạt
+### Deliverables
 
-- Hướng dẫn thiết lập `.env` trong repo (không commit `.env`).
-- Nội dung `artifacts/system_prompt.md` cho baseline.
-- Khai báo tool baseline trong `artifacts/tools.yaml`.
-- Kết quả chạy `python run_eval.py --version v0` và file run JSON.
-- Tổng hợp số liệu baseline.
+- `.env` setup instructions in the repo (not committed).
+- `artifacts/system_prompt.md` baseline content.
+- `artifacts/tools.yaml` baseline declarations.
+- `run_eval.py --version v0` output and run JSON evidence.
+- Baseline metrics summary.
 
-### Công việc
+### Tasks
 
-1. Tạo file `.env` từ `./.env.example`.
-   - Điền API key provider dùng.
-   - Điền `TAVILY_API_KEY` và `RAPIDAPI_KEY` nếu cần.
+1. Create `.env` based on `./.env.example`.
+   - Set provider key for whichever service you will use.
+   - Set `TAVILY_API_KEY` and `RAPIDAPI_KEY` if needed for web/social tools.
 
-2. Cài dependencies Python:
-   ```powershell
+2. Install Python dependencies if not already installed:
+   ```bash
    cd starter_v0
    python -m venv .venv
    .\.venv\Scripts\Activate.ps1
    python -m pip install -r requirements.txt
    ```
 
-3. Chạy preflight:
-   ```powershell
+3. Run the preflight check:
+   ```bash
    python scripts/preflight_provider.py --provider openrouter
    ```
-   - Nếu dùng provider khác thì đổi tham số.
-   - Sửa lỗi provider nếu có.
+   - If using another provider, change the provider flag.
+   - Fix any provider issues before moving on.
 
-4. Viết `artifacts/system_prompt.md`.
-   - Tập trung mission AI Trend Detective.
-   - Định nghĩa rõ quy tắc gọi tool.
+4. Write baseline `artifacts/system_prompt.md`.
+   - Focus on AI Trend Detective mission.
+   - Make clear routing rules for the baseline tool set.
 
-5. Xác nhận `artifacts/tools.yaml` có ít nhất 5 tool core.
-   - `clarify`, `lookup`, `social_search`, `timeline`, `fetch`, `format`.
-   - Chưa thêm tool mới.
+5. Confirm `artifacts/tools.yaml` contains at least 5 core tools.
+   - `clarify`, `lookup`, `social_search`, `timeline`, `fetch`, `format` are good.
+   - Do not add the new tool yet.
 
-6. Chạy baseline eval:
-   ```powershell
+6. Run baseline eval:
+   ```bash
    python run_eval.py --provider openrouter --version v0 --suite base --eval-cases data/eval_base.json
    ```
 
-7. Lưu run file và ghi số liệu.
-   - Thêm dòng `v0` vào `artifacts/version_log.csv`.
-   - Ghi tên file run JSON.
+7. Save the run file and note the metrics.
+   - Add a `v0` row in `artifacts/version_log.csv`.
+   - Record the run JSON filename.
 
-### Ghi chú
+### Notes
 
-- Nguyễn Hoàng Việt không chỉnh team eval cases giai đoạn này.
-- Baseline cần đủ ổn định để hỗ trợ UI và version sau.
+- `Nguyễn Hoàng Việt` should not change team eval cases yet.
+- Baseline should be stable enough to support the UI and later versions.
 
 ---
 
-## Nguyễn Đức Nam Khánh: UI / Demo lead
+## Member Nguyễn Đức Nam Khánh: UI / Demo lead
 
-### Trách nhiệm
+### Responsibilities
 
-- Tạo UI Streamlit `app.py`.
-- Hiển thị trace tool, version và transcript.
-- Kiểm tra UI chạy cục bộ.
-- Chuẩn bị tài liệu demo và báo cáo.
+- Create Streamlit UI entrypoint `app.py`.
+- Display tool trace, version info, and transcript metadata.
+- Verify UI works locally.
+- Prepare demo artifacts and the final report format.
 
-### Kết quả cần đạt
+### Deliverables
 
-- `starter_v0/app.py` chạy được.
-- `requirements.txt` có `streamlit>=1.30.0`.
-- UI hiển thị:
-  - yêu cầu người dùng
-  - phản hồi cuối của agent
-  - tool rounds và tool events
-  - version artifact
-  - file transcript đã lưu
-- Nội dung demo trong `artifacts/REPORT.md` phần A.
+- `starter_v0/app.py` working Streamlit app.
+- `requirements.txt` includes `streamlit>=1.30.0`.
+- UI behavior showing:
+  - user request
+  - final agent response
+  - tool rounds and tool events
+  - artifact version label
+  - saved transcript file path
+- Demo notes and scenarios in `artifacts/REPORT.md` Part A.
 
-### Công việc
+### Tasks
 
-1. Thêm Streamlit nếu cần:
-   - Mở `requirements.txt`, thêm `streamlit>=1.30.0`.
+1. Add Streamlit dependency if missing:
+   - Open `requirements.txt` and add `streamlit>=1.30.0`.
 
-2. Tạo file `starter_v0/app.py`.
-   - Dùng lại `run_model_tool_loop` từ `chat.py`.
-   - Cho phép chọn provider, version, và model override.
-   - Hiển thị tool calls và tool results.
-   - Lưu transcript vào `transcripts/`.
+2. Create `starter_v0/app.py`.
+   - Reuse `run_model_tool_loop` from `chat.py`.
+   - Allow selecting provider, version, and model override.
+   - Show live tool calls and results in the UI.
+   - Save transcripts to `transcripts/`.
 
-3. Chạy app cục bộ:
-   ```powershell
+3. Run the app locally:
+   ```bash
    streamlit run app.py
    ```
-   - Xác nhận mở được `http://localhost:8501`.
+   - Confirm it opens at `http://localhost:8501`.
 
-4. Test UI với một câu hỏi thử.
-   - Xác nhận trace tool xuất hiện.
-   - Xác nhận transcript file được tạo.
+4. Test the UI with a simple agent request.
+   - Confirm the trace appears.
+   - Confirm transcript file is created.
 
-5. Chuẩn bị nội dung `artifacts/REPORT.md` phần A.
-   - Mô tả mission, danh sách tool, câu hỏi mẫu, và kịch bản demo.
+5. Prepare `artifacts/REPORT.md` Part A content.
+   - Add the agent mission, tool list, sample questions, and demo scenarios.
 
-### Ghi chú
+### Notes
 
-- UI là deliverable bắt buộc.
-- Nếu Streamlit không chạy được, có thể dùng Flask/Gradio nhưng vẫn giữ tính năng tương đương.
+- UI is a core deliverable, not optional.
+- If Streamlit is unavailable, use a simple Flask/Gradio fallback, but keep the same contract.
 
 ---
 
-## Nguyễn Mạnh Cường: Tool + Eval lead
+## Member Nguyễn Mạnh Cường: Tool + Eval lead
 
-### Trách nhiệm
+### Responsibilities
 
-- Thêm tool mới của nhóm.
-- Cập nhật `tools/__init__.py` và `artifacts/tools.yaml`.
-- Viết 10 case team eval vào `data/eval_group.json`.
-- Chạy `v1` và `v2`.
-- Hỗ trợ tạo transcript và bằng chứng báo cáo.
+- Add the new team tool.
+- Update `tools/__init__.py` and `artifacts/tools.yaml`.
+- Write the team evaluation cases in `data/eval_group.json`.
+- Run `v1` and `v2` evaluations.
+- Help produce final demo transcripts and report evidence.
 
-### Kết quả cần đạt
+### Deliverables
 
-- Folder tool mới và tài liệu.
-- Khai báo tool mới cập nhật.
-- `data/eval_group.json` có 10 case.
-- Kết quả chạy `run_eval.py` cho `v1` và `v2`.
-- Bằng chứng team eval và tool mới.
+- New tool implementation directory and docs.
+- Updated tool declarations and prompt if needed.
+- `data/eval_group.json` with 10 cases.
+- `run_eval.py` results for `v1` and `v2`.
+- Evidence for team eval and new tool.
 
-### Công việc
+### Tasks
 
-1. Chọn tên và thiết kế tool mới.
-   - Gợi ý: `evidence_judge` hoặc `trend_verdict`.
-   - Tool nhận evidence và trả scores/verdict.
+1. Choose the new tool name and design.
+   - Suggested: `evidence_judge` or `trend_verdict`.
+   - The tool should take gathered evidence and return scores/verdict.
 
-2. Tạo folder tool mới:
+2. Create new tool folder:
    - `tools/evidence_judge/TOOL.md`
    - `tools/evidence_judge/tool.py`
 
-3. Đăng ký tool:
-   - Thêm import và mapping trong `tools/__init__.py`.
-   - Thêm khai báo tool vào `artifacts/tools.yaml`.
+3. Register the tool:
+   - Add the new import and function mapping in `tools/__init__.py`.
+   - Add the tool declaration into `artifacts/tools.yaml`.
 
-4. Viết logic trong `tool.py`.
-   - Tính điểm evidence và trả JSON.
-   - Giữ đơn giản nhưng có ý nghĩa.
+4. Implement basic logic in `tool.py`.
+   - Score evidence and return structured JSON.
+   - Keep it simple but meaningful.
 
-5. Viết case eval trong `data/eval_group.json`.
-   - 5 case single-turn.
-   - 5 case multi-turn.
-   - Mỗi case có `phase: "B"`, `failure_type`, `expect`, `metadata.what_it_tests`.
-   - Phản ánh ý tưởng Trend Detective.
+5. Create team eval cases in `data/eval_group.json`.
+   - 5 single-turn queries.
+   - 5 multi-turn conversations.
+   - Each with `phase: "B"`, `failure_type`, `expect`, and `metadata.what_it_tests`.
+   - Test the new trend analysis concept.
 
-6. Chạy đường dẫn tool mới.
-   - Sau baseline, chạy `v1` base eval.
-   - Sau đó chạy `v2` group eval.
+6. Run the new tool path.
+   - After baseline, run `v1` on base eval to validate new tool usage.
+   - Then run `v2` on group eval.
 
-7. Ghi `v1` và `v2` vào `artifacts/version_log.csv`.
-   - Ghi prompt/tool thay đổi, giả thuyết, metric before/after, và file run.
+7. Add `v1` and `v2` entries into `artifacts/version_log.csv`.
+   - Document the prompt/tool change, hypothesis, metric before/after, and run file.
 
-### Ghi chú
+### Notes
 
-- Giữ tên tool đồng bộ giữa `artifacts/tools.yaml`, `tools/__init__.py`, và case eval.
-- File eval nhóm phải phản ánh ý tưởng Trend Detective.
-
----
-
-## Phối hợp chung
-
-### Chia sẻ và review
-
-- Dùng cùng một branch và cập nhật tiến độ thường xuyên.
-- Review chéo trước khi commit.
-- Giữ `artifacts/system_prompt.md` và `artifacts/tools.yaml` đồng bộ.
-- Kiểm tra mỗi thay đổi bằng eval hoặc app test.
-
-### Sync hàng ngày gợi ý
-
-1. Nguyễn Hoàng Việt báo baseline và số liệu `v0`.
-2. Nguyễn Đức Nam Khánh xác nhận UI chạy và trace hiển thị.
-3. Nguyễn Mạnh Cường chia tool mới và case eval.
-4. Thống nhất mọi thay đổi prompt/tool.
-
-### Sở hữu file
-
-- `Nguyễn Hoàng Việt`: `artifacts/system_prompt.md`, baseline `v0`, preflight, `artifacts/version_log.csv`.
-- `Nguyễn Đức Nam Khánh`: `app.py`, UI trace, `requirements.txt`, báo cáo `artifacts/REPORT.md`.
-- `Nguyễn Mạnh Cường`: `tools/evidence_judge`, `tools/__init__.py`, `artifacts/tools.yaml`, `data/eval_group.json`, `run_eval` team eval.
+- Keep tool names synchronized across `artifacts/tools.yaml`, `tools/__init__.py`, and eval expectations.
+- The team eval file should be original and reflect your Trend Detective concept.
 
 ---
 
-## Checklist demo cuối
+## Cross-team coordination
 
-Mỗi thành viên xác nhận một artifact:
+### Shared work and review
+
+- Use the same branch and share progress often.
+- Review each others changes before commit.
+- Keep `artifacts/system_prompt.md` and `artifacts/tools.yaml` in sync.
+- Validate every change by re-running the relevant eval or app test.
+
+### Suggested daily sync
+
+1. Nguyễn Hoàng Việt reports baseline status and `v0` metrics.
+2. Nguyễn Đức Nam Khánh confirms UI works and shows the trace.
+3. NNguyễn Mạnh Cường shares tool implementation and eval cases.
+4. Agree on any prompt/tool wording changes together.
+
+### File ownership summary
+
+- `Nguyễn Hoàng Việt`: `artifacts/system_prompt.md`, baseline `v0`, preflight checks, `artifacts/version_log.csv`.
+- `Nguyễn Đức Nam Khánh`: `app.py`, UI trace display, `requirements.txt`, demo writeup in `artifacts/REPORT.md`
+- `NNguyễn Mạnh Cường`: `tools/evidence_judge`, `tools/__init__.py`, `artifacts/tools.yaml`, `data/eval_group.json`, `run_eval` for team eval.
+
+---
+
+## Final demo checklist
+
+Each member should verify one demo artifact:
 
 - Nguyễn Hoàng Việt: `python run_eval.py --provider openrouter --version v0 --suite base --eval-cases data/eval_base.json`
-- Nguyễn Đức Nam Khánh: `streamlit run app.py` chạy và UI hiển thị trace.
-- Nguyễn Mạnh Cường: `python run_eval.py --provider openrouter --version v2 --suite group --eval-cases data/eval_group.json`
+- Nguyễn Đức Nam Khánh: `streamlit run app.py` works and UI shows tool trace.
+- NNguyễn Mạnh Cường: `python run_eval.py --provider openrouter --version v2 --suite group --eval-cases data/eval_group.json`
 
-Sau đó chuẩn bị demo chung:
+Then prepare a final joint demo with:
 
-- Case baseline thể hiện v0.
-- Case v1 thể hiện tool mới.
-- Case v2 team eval thể hiện Trend Detective.
-- Scenario live UI từ `app.py`.
+- A baseline case showing v0 behavior.
+- A v1 improvement showing the new tool in action.
+- A v2 team eval case demonstrating the Trend Detective concept.
+- A live UI scenario from `app.py`.
 
 ---
 
-## Cách dùng file này
+## How to use this file
 
-1. Gán tên thật cho mỗi thành viên.
-2. Theo thứ tự công việc từng phần.
-3. Cập nhật file nếu vai trò thay đổi.
+1. Assign actual names to Nguyễn Hoàng Việt, B, C.
+2. Follow the step order in each section.
+3. Update the file if roles shift or if the team decides a different split is better.
 
-Chúc nhóm hoàn thành tốt — kế hoạch này theo đúng workflow bạn yêu cầu và làm rõ công việc cho team 3 người.
-"@
-[System.IO.File]::WriteAllText('TEAM_TASKS_fixed.md', $txt, [System.Text.Encoding]::UTF8)
+Good luck — this plan follows your exact workflow and makes the lab execution clear for a 3-person team.
